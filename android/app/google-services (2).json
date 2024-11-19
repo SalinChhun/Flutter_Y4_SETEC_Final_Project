@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "853832693488",
+    "project_id": "flutter-f86e1",
+    "storage_bucket": "flutter-f86e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853832693488:android:8facfda977c4cf7a9ff435",
+        "android_client_info": {
+          "package_name": "com.eccoman.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853832693488-dj5luuv4a6ha82i9pvjivegqen0eij8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eccoman.ecommerce",
+            "certificate_hash": "a11fd428ac2d056d0ade078d8878226d0697387e"
+          }
+        },
+        {
+          "client_id": "853832693488-1cavdtjb6l07lf66m87veke1af4arvv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSC2BCqukorqtuHAxnjq5VimaEvgaFSnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853832693488-1cavdtjb6l07lf66m87veke1af4arvv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

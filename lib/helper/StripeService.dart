@@ -1,0 +1,6 @@
+class StripeService {
+
+  // static const publishlivekey = "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";
+  static const publishlivekey ="pk_live_51LkUHQEQYj9biXMEJr7XFSXkvA9gGKnVlYJlIAjH8fRP7DjLEPeFcriphBO3ZgjVmrejbRqm48wX36Dy8JKH2Aej009gFhUGa9";
+  static const clientkey ="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";
+}
