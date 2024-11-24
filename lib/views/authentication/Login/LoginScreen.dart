@@ -81,13 +81,6 @@ class _loginScreenState extends State<loginScreen> {
             if (state is LoginError) {
               return Text("Error has occur");
             }
-            // if(state is LoginUnAuthorize) {
-            //
-            //
-            //
-            //
-            //   return LoginUI(errormessage: "there is no user associated with please consider register a new account",);
-            // }
             else {
               return LoginUI();
             }

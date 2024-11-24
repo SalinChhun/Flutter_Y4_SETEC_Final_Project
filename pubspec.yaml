@@ -70,6 +70,8 @@ dev_dependencies:
   equatable: ^2.0.5
   carousel_indicator: ^1.0.6
   carousel_slider: ^5.0.0
+  # carousel_indicator: ^1.0.6
+  # carousel_slider: ^4.2.1
   badges: ^3.1.2
   location: ^7.0.1
   google_nav_bar: ^5.0.6

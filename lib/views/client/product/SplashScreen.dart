@@ -114,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
     print("My first use");
     print('this is first ${prefs?.getBool("firstuse")}');
 
-    if (prefs?.getBool("firstuse") == false) {
+    if (prefs?.getBool("firstuse") == null) {
       print("User first use");
       prefs?.setBool("firstuse", false);
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(

@@ -15,7 +15,7 @@ class WelcomeSecond extends StatelessWidget {
       child: Container(
         width: double.maxFinite,
         height: 430,
-        child: Lottie.asset('assets/lotties/animation_lmr6pbss.json',
+        child: Lottie.asset('assets/lotties/animation_screen2.json',
 
 
             fit: BoxFit.contain

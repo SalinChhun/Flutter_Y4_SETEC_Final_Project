@@ -15,7 +15,7 @@ class GettingStarted extends StatelessWidget {
       child: Container(
         width: double.maxFinite,
         height: 430,
-        child: Lottie.asset('assets/lotties/animation_lmr6sqpi.json',
+        child: Lottie.asset('assets/lotties/animation_screen3.json',
 
 
             fit: BoxFit.contain

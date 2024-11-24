@@ -25,17 +25,17 @@ class _StartScreenState extends State<StartScreen> {
   var listofcontent = [
     Splash(
         buttontitle: "Get Started",
-        headertitle: "Welcome to Tenh Ey Store",
+        headertitle: "Welcome to EasyCart",
         body:
             "An advance ecommerce system that allow you purchase items with just a click and done "),
     Splash(
         buttontitle: "Continue",
-        headertitle: "Find your product you love",
+        headertitle: "Find Your Favorites",
         body:
             "An advance ecommerce system that allow you purchase items with just a click and done "),
     Splash(
         buttontitle: "Ready",
-        headertitle: "Click and enjoy your time",
+        headertitle: "Fast Delivery",
         body:
             "An advance ecommerce system that allow you purchase items with just a click and done "),
   ];
@@ -44,6 +44,7 @@ class _StartScreenState extends State<StartScreen> {
     // TODO: implement build
     changefirstuse();
     return Scaffold(
+        backgroundColor: Color(AppColorConfig.appbackground),
         appBar: null,
         body: SafeArea(
           child: LayoutBuilder(
@@ -75,24 +76,25 @@ class _StartScreenState extends State<StartScreen> {
                     padding: const EdgeInsets.all(18.0),
                     child: Column(
                       children: [
+                        Center(
+                          child: Text(
+                            "${listofcontent[initstate].headertitle}",
+                            textAlign:
+                                TextAlign.center, // Center the header title
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Center(
+                          child: Text(
+                            "${listofcontent[initstate].body}",
+                            textAlign: TextAlign.center, // Center the body text
+                            style: TextStyle(
+                                fontSize: 14, color: Colors.grey[700]),
+                          ),
+                        ),
                         //TODO text
-                        Text(
-                          "${listofcontent[initstate].headertitle}",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "${listofcontent[initstate].body}",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500),
-                        ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

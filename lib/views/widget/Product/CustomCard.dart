@@ -1,3 +1,4 @@
+import 'package:ecommerce/res/constant/appfont.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,8 +19,6 @@ class CustomCardList extends StatefulWidget {
 }
 
 class _CustomCardListState extends State<CustomCardList> {
-
-
   String? getFirstImageUrl() {
     if (widget.product?.imgid == null || widget.product!.imgid!.isEmpty) {
       return null;
@@ -35,7 +34,7 @@ class _CustomCardListState extends State<CustomCardList> {
     final discount = widget.product!.discount!;
     return price - (price * (discount / 100)).truncateToDouble();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (widget.product == null) {
@@ -44,12 +43,12 @@ class _CustomCardListState extends State<CustomCardList> {
 
     final imageUrl = getFirstImageUrl() ?? 'http://via.placeholder.com/350x150';
 
-    return InkWell(
+    return GestureDetector(
       onTap: () async {
         try {
           final prefs = await SharedPreferences.getInstance();
           if (!mounted) return;
-          
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -78,97 +77,106 @@ class _CustomCardListState extends State<CustomCardList> {
           );
         }
       },
-      child: Container(
+      child: Card(
+        elevation: 4,
         margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.24)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                width: double.maxFinite,
-                height: 155,
-                fit: BoxFit.cover,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                      child: CircularProgressIndicator(
-                        color: Color(AppColorConfig.success),
-                        value: downloadProgress.progress,
+              flex: 2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  height: 155,
+                  fit: BoxFit.cover,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: Color(AppColorConfig.success),
+                          value: downloadProgress.progress,
+                        ),
                       ),
-                    ),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error_outline,
-                  size: 48,
-                  color: Colors.grey,
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
             ),
             Expanded(
+              flex: 3,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(12),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.product?.discount != null && 
-                        widget.product!.discount! > 0)
+                    if (widget.product?.discount != null && widget.product!.discount! > 0)
                       Container(
                         decoration: BoxDecoration(
                           color: Color(AppColorConfig.negativelight),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: Color(AppColorConfig.negativecolor),
                             width: 1,
                           ),
                         ),
                         padding: const EdgeInsets.all(4),
-                        width: 70,
-                        alignment: Alignment.center,
+                        alignment: Alignment.center, 
                         child: Text(
                           "${widget.product!.discount}% OFF",
                           style: TextStyle(
                             color: Color(AppColorConfig.negativecolor),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       )
                     else
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 20),
 
                     Text(
                       widget.product?.productname ?? 'No name available',
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        fontWeight: FontWeightConfig.medium,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
 
+                    const SizedBox(height: 8),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "\$ ${calculateDiscountedPrice()}",
+                          "\$ ${calculateDiscountedPrice().toStringAsFixed(2)}",
                           style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
+                            fontWeight: FontWeightConfig.medium,
+                            fontSize: 18,
+                            color: Colors.black87,
                           ),
                         ),
                         CircleAvatar(
-                          backgroundColor: Color(AppColorConfig.success),
-                          radius: 12,
+                          backgroundColor: Color(AppColorConfig.primarycolor),
+                          radius: 14,
                           child: Image.asset(
                             'assets/logo/shopping-cart.png',
-                            width: 14,
-                            height: 14,
+                            width: 16,
+                            height: 16,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ],
                     ),
+
+                    const SizedBox(height: 8),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,9 +184,9 @@ class _CustomCardListState extends State<CustomCardList> {
                         Text(
                           "Free Shipping",
                           style: TextStyle(
-                            fontSize: 10.8,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: Color(AppColorConfig.success),
+                            color: Color(AppColorConfig.primarycolor),
                           ),
                         ),
                         Row(
@@ -189,7 +197,8 @@ class _CustomCardListState extends State<CustomCardList> {
                               color: Colors.amberAccent,
                             ),
                             Text(
-                              widget.product?.avgRating?.toStringAsFixed(2) ?? 'N/A',
+                              widget.product?.avgRating?.toStringAsFixed(1) ?? 'N/A',
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),

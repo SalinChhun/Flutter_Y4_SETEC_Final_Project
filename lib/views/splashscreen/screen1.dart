@@ -1,6 +1,3 @@
-
-
-
 import 'package:ecommerce/views/splashscreen/screen2.dart';
 import 'package:ecommerce/views/splashscreen/screen3.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +6,7 @@ import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatefulWidget {
   var apptitle;
- WelcomeScreen ({this.apptitle });
+  WelcomeScreen({this.apptitle});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -25,14 +22,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: Container(
         width: double.maxFinite,
         height: 430,
-        child: Lottie.asset('assets/lotties/animation_lmr6ox6u.json',
-
-
-        fit: BoxFit.contain
-        ),
+        child: Lottie.asset('assets/lotties/animation_screen1.json',
+            fit: BoxFit.contain),
         decoration: BoxDecoration(
             // color: Colors.green
-        ),
+            ),
       ),
     );
   }

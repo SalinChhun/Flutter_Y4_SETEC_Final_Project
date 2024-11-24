@@ -17,4 +17,5 @@ class AppColorConfig {
 
   static var success = 0xff118154;
 
+  static var appbackground = 0xffffffff;
 }
