@@ -87,13 +87,14 @@ class NetworkApiService {
 
   Future<dynamic> AuthUser(String? email, String? password) async {
     try {
-      var res = await http.post(Uri.parse("https://django-ecomm-6e6490200ee9.herokuapp.com/auth/login"),
+      print('login service work ${email}, ${password}');
+      var res = await http.post(Uri.parse(ApiUrl.authlogin),
           body: {
             "email": "${email}",
             "password": "${password}"
           }
       );
-      print(res.statusCode);
+      print('res.statusCode ${res.statusCode}');
       print(res.body);
       if (res.statusCode == 200) {
         return json.decode(res.body);
@@ -237,52 +238,19 @@ class NetworkApiService {
       print("No internet during communication");
     }
   }
-  // Future<dynamic> AuthVerify(String? email,String? password) async {
-  //
-  //   try{
-  //     var res = await http.post(Uri.parse("http://192.168.100.5:8000/auth/login"),
-  //         body: {
-  //           "email":"Nightpp19@gmail.com",
-  //           "password":"1"
-  //         }
-  //     );
-  //     print(res.statusCode);
-  //     print(res.body.toString());
-  //     if (res.statusCode == 200 ) {
-  //       return json.decode(res.body);
-  //       print(res.body);
-  //     }
-  //     else{
-  //       print("Error during communication");
-  //     }
-  //
-  //
-  //
-  //   }on SocketException {
-  //     print("No internet during communication");
-  //   }
-  // }
 
   Future<dynamic> AuthSignUpUser(fname, lname, String? email, String? password,
       String? telephone, String? username,String gender) async {
     try {
-      // print("Register user");
-      print(telephone);
+
       var tel = "+" + telephone.toString();
 
-      print("Network service");
-      print(fname);
-      print(lname);
-      print(username);
 
-
-          var res = await http.post(Uri.parse('https://django-ecomm-6e6490200ee9.herokuapp.com/auth/register'),
+          var res = await http.post(Uri.parse('http://localhost:8000/auth/register'),
 
 
 
           body: {
-
-
             "firstname": fname,
             "lastname": lname,
             "email": email,
@@ -290,11 +258,9 @@ class NetworkApiService {
             "password": password,
             "telephone": tel,
             "gender": gender,
-            // "username": username
           }
       );
-          print('The state in register is');
-      print(res.body);
+      print("work hah"+res.body);
       print(res.statusCode);
       print(res.body.toString());
       if (res.statusCode == 201) {

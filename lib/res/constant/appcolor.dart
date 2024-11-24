@@ -3,7 +3,7 @@ class AppColorConfig {
   static var root = "0xff";
 
 
-  static var primarycolor = 0xff000000;
+  static var primarycolor = 0xFF7010DF;
   static var bgcolor  = 0xffFFFFFF;
   static var primaryswatchv2 = 0xff508A7B;
 

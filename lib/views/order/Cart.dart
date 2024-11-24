@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../helper/HexColorConverter.dart';
 import '../../model/Product/CartModel.dart';
-import '../../viewmodel/products/address_bloc.dart';
-import '../widget/Product/CustomButton.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widget/other/EmptyWidget.dart';
@@ -67,12 +65,6 @@ var imgindexx =0;
 
 
             }
-            // ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Added to cart") ));
-
-
-
           },
           builder: (context, state) {
             print("Item cart is ");
@@ -435,20 +427,6 @@ var imgindexx =0;
                     ),)
                   ],
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     // Text('Discount', style: TextStyle(
-                //     //     fontSize: 12.8,
-                //     //     color: Colors.grey
-                //     // ),),
-                //     Text('\% ${cart.discount}', style: TextStyle(
-                //         fontSize: 12.8,
-                //         color: Colors.black,
-                //         fontWeight: FontWeight.w500
-                //     ),)
-                //   ],
-                // ),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -532,95 +510,7 @@ var imgindexx =0;
             );
         },
       )
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton:     Container(
-      //
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //
-      //
-      //   ),
-      //   width: double.maxFinite,
-      //   padding: EdgeInsets.all(15),
-      //   height: 180,
-      //   child: Column(
-      //     children: [
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           Text('Product Price',style: TextStyle(
-      //             fontSize: 12.8,
-      //             color: Colors.grey
-      //           ),),
-      //           Text('\$ 120',style: TextStyle(
-      //               fontSize: 12.8,
-      //               color: Colors.black,
-      //             fontWeight: FontWeight.w500
-      //           ),)
-      //         ],
-      //       ),
-      //       Divider(),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           Text('Discount',style: TextStyle(
-      //               fontSize: 12.8,
-      //               color: Colors.grey
-      //           ),),
-      //           Text('\% 0',style: TextStyle(
-      //               fontSize: 12.8,
-      //               color: Colors.black,
-      //               fontWeight: FontWeight.w500
-      //           ),)
-      //         ],
-      //       ),
-      //       Divider(),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           Text('Subtotal',style: TextStyle(
-      //               fontSize: 12.8,
-      //               color: Colors.grey
-      //           ),),
-      //           Text('\$ 120',style: TextStyle(
-      //               fontSize: 12.8,
-      //               color: Colors.black,
-      //               fontWeight: FontWeight.w500
-      //           ),)
-      //         ],
-      //       ),
-      //       Divider(),
-      //       ElevatedButton(onPressed: () {
-      //
-      //       },
-      //           style: ElevatedButton.styleFrom(
-      //               backgroundColor: Colors.black,
-      //               elevation: 0,
-      //               shape: RoundedRectangleBorder(
-      //                   side: BorderSide(color: Colors.black.withOpacity(0.14)),
-      //                   borderRadius: BorderRadius.circular(3)
-      //               )
-      //           ),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             children: [
-      //               Image.asset('assets/logo/shopping-cart.png',
-      //                   width: 20,
-      //                   height: 20,
-      //                   fit: BoxFit.cover,
-      //
-      //               ),
-      //               SizedBox(width: 10,),
-      //               Text("Proceed to Checkout",style: TextStyle(
-      //                   fontSize: 12.8,
-      //
-      //               ),)
-      //             ],
-      //           )),
-      //
-      //     ],
-      //   ),
-      // ),
+
 
     );
   }

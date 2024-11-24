@@ -14,7 +14,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../widget/LoadingIcon.dart';
 import '../../widget/Product/CustomCard.dart';
 
-
 class NewArrivalSection extends StatefulWidget {
   const NewArrivalSection({
     super.key,
@@ -27,12 +26,12 @@ class NewArrivalSection extends StatefulWidget {
 class _NewArrivalSectionState extends State<NewArrivalSection> {
   @override
   void initState() {
-
     // TODO: implement initState
     super.initState();
 
-    BlocProvider.of<ProductBlocSorting>(context).add (SortProduct());
+    BlocProvider.of<ProductBlocSorting>(context).add(SortProduct());
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -42,48 +41,41 @@ class _NewArrivalSectionState extends State<NewArrivalSection> {
 
     super.dispose();
   }
+
   Widget build(BuildContext context) {
     return Expanded(
-
         child: BlocConsumer<ProductBlocSorting, ProductState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
-          builder: (context, state) {
-
-            if(state is ProductSortLoading) {
-
-              return Center(
-                  child:LoadingIcon()
-
-              );
-            }
-            if(state is  ProductSortCompleted){
-              var productlen = state.product!.results!.length;
-              var allproduct = state.product!.results;
-              int len =  productlen;
-              return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: len ?? 0,
-
-                itemBuilder: (context, index) {
-
-                  return CustomCardList(product:allproduct![index],len: len,);
-                },);
-            }
-            if(state is  ProductSortError){
-              return Center(
-                child: Text("Error has been occur"),
-              );
-            }
-            else{
-              return Center(
-                child: Text("sth error"),
-              );
-            }
-
-          },
-        ));
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        if (state is ProductSortLoading) {
+          return Center(child: LoadingIcon());
+        }
+        if (state is ProductSortCompleted) {
+          var results = state.product?.results ?? [];
+          var len = results.length;
+          if (len == 0) {
+            return Center(child: Text("No products available"));
+          }
+          return ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: len,
+            itemBuilder: (context, index) {
+              return CustomCardList(product: results[index], len: len);
+            },
+          );
+        }
+        if (state is ProductSortError) {
+          return Center(
+            child: Text("Error has been occur"),
+          );
+        } else {
+          return Center(
+            child: Text("sth error"),
+          );
+        }
+      },
+    ));
   }
 }
-

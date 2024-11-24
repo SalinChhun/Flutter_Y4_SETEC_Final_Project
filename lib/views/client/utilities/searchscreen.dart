@@ -495,31 +495,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           return LoadingIcon();
                         }
                         if (state is ProductSortCompleted) {
-                          // listofproduct.addAll(state.product!.results!);
-                          // listofproduct.toSet().toList();
-                          // var productlen = state.product!.results!.length;
-                          // var ls =  state.product!.results;
-                          // print(ls?.length);
-                          // if(init == true) {
-                          //   listofproduct.clear();
-                          //   init = false;
-                          // }
-
-                          // if(init == true) {
-                          //   print("Init is tre");
-                          //   init = false;
-                          //   listofproduct.clear();
-                          // }
+                          
                           var listofproducts =[];
                           print("BEfore adding");
                           print(listofproduct.length);
 
 
 
-                          listofproduct.addAll( state.product!.results!);
+                          listofproduct.addAll( state.product!.results ?? []);
 
                           print(listofproduct);
-                          print(listofproduct.length);
+                          print(listofproduct?.length);
                           var productlen = listofproduct?.length;
                           var ls = listofproduct;
                           // print(ls);
@@ -563,7 +549,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     },
                                     child: GridView.builder(
 
-                                      itemCount: ls ?.length ?? 0,
+                                      itemCount: ls?.length ?? 0,
                                       scrollDirection: Axis.vertical,
                                       controller: _controller,
 
@@ -589,17 +575,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                        
                                               SharedPreferences prefs = await SharedPreferences.getInstance();
                                               Navigator.push(context,MaterialPageRoute(builder: (context) {
-                                                // print(widget.product!.id);
-                                                // print( widget.product!.imgid![0].images);
-                                                // print(widget.product!.price);
-                                                // print(widget.product!.category?.id);
-                                                // print( widget.product!.attribution);
-                                                // print(widget.product!.discount);
-                                                // print(widget.product!.avgRating);
-                                                // print(  widget.product!.description);
-                                                // print( widget.product!.sellRating);
-                                                // print( widget.product!.productname);
-                                                // print( widget.product!.stockqty);
                                                 return ProductDetailScreen(
                                                   userid: prefs.getInt("userid"),
                                                     productss: MyProductDetail(

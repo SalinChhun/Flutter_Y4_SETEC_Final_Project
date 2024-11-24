@@ -54,7 +54,9 @@ class _CardCategoryScrollState extends State<CardCategoryScroll> {
       return const LoadingIcon();
     }
     if(state is CategoryCompleted ){
-      var len = state.category!.results!.length;
+     
+      var results = state.category?.results ?? [];
+      var len = results.length;
 
       return ListView.builder(
         itemCount: len ?? 0,
@@ -67,7 +69,7 @@ class _CardCategoryScrollState extends State<CardCategoryScroll> {
                print(category.id);
                Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ProductAllPage(
-                    category:  state.category!.results,
+                    category:  state.category?.results,
                     selectedcategory:  category.id,
 
                   );
@@ -84,7 +86,7 @@ class _CardCategoryScrollState extends State<CardCategoryScroll> {
                     backgroundColor: Colors.grey.shade300,
 
                     backgroundImage:
-                    NetworkImage('${category.imgid!.images}'),
+                    NetworkImage(category.imgid?.images ?? ''),
                   ),
 
 

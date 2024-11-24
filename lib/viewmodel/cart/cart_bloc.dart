@@ -25,10 +25,6 @@ class CartBloc extends Bloc<CartEvent, AllCart> {
       int index = -1;
 
       state.itemcart!.forEach((element) {
-        // 1 < 3
-        // 2 < 3
-        // 3 <= 3
-        // 4 <= 3
         if(element.stockqty  == 0) {
           print("Product qty in stock: ");
           print(element.stockqty);
@@ -87,22 +83,9 @@ class CartBloc extends Bloc<CartEvent, AllCart> {
       else {
         print("Does not exist");
         print(index);
-        // print(event.cartitem!.stockqty);
         print(event.cartitem!.qty);
-        // var cartitem= state.itemcart?.firstWhere((element) => element.cartid == event.cartitem?.cartid);
-        //       print(cartitem!.qty!);
-        //       if ( cartitem!.qty! <=  event.cartitem!.qty!) {
-
 
         curr!.add(event!.cartitem!);
-        // Save the updated cart to SharedPreferences
-
-
-        // Print the cart items
-
-        // }
-
-        // }
       }
 
 

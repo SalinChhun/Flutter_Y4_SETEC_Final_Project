@@ -82,16 +82,15 @@ class _PopularSectionState extends State<PopularSection> {
                     );
                   }
                   if(state is ProductCompleted) {
-                    var productlen = state.product!.results!.length;
-                    var allproduct = state.product!.results;
-                    int len =  productlen;
+                    var allproduct = state.product!.results ?? [];
+                    int len =  allproduct.length;
                     return ListView.builder(
 
                       scrollDirection: Axis.horizontal,
-                      itemCount:productlen ,
+                      itemCount:len ,
                       itemBuilder: (context, index) {
 
-                        return   CardHoriScroll(product: allproduct![index],);
+                        return   CardHoriScroll(product: allproduct[index],);
                       },);
                   }
                   else{

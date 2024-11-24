@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:ecommerce/model/Category/ProductCategory.dart';
 import 'package:ecommerce/model/Product/ProductModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class CartItem{
+
+class CartItem {
   var productid;
   int? qty;
   var cartid;
@@ -11,22 +12,30 @@ class CartItem{
   var imgurl;
   var price;
   var sizetext;
- var attribution;
- var colorcode;
- var stockqty;
+  var attribution;
+  var colorcode;
+  var stockqty;
 
   var discount;
   var colorid;
   var imgid;
   var sizeid;
 
-  CartItem({this.productid, this.qty, this.producttitle, this.imgurl, this.price,
-    this.colorcode,
-    this.stockqty,
-    this.cartid,
-
-      this.attribution, this.discount,this.colorid,this.imgid,this.sizeid,this.sizetext });
-
+  CartItem(
+      {this.productid,
+      this.qty,
+      this.producttitle,
+      this.imgurl,
+      this.price,
+      this.colorcode,
+      this.stockqty,
+      this.cartid,
+      this.attribution,
+      this.discount,
+      this.colorid,
+      this.imgid,
+      this.sizeid,
+      this.sizetext});
 
   // Convert CartItem to a JSON map
   Map<String, dynamic> toJson() {
@@ -73,6 +82,4 @@ class CartModel {
   List<CartItem> _item = [];
 
   List<CartItem> get item => _item;
-
-
 }

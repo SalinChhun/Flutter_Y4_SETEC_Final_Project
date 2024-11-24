@@ -1,9 +1,7 @@
 class ApiUrl {
 
-  static var main = "https://django-api-ecommerce-50c3b7e699ce.herokuapp.com/";
+  static var main = "http://10.0.2.2:8000/";
   static var authlogin = "${main}auth/login";
-  // https://django-ecomm-6e6490200ee9.herokuapp.com/auth/register
-
   static var authsignup = "${main}auth/register";
   static var superdealurl = "${main}superdeal/product";
   static var superdealsingleurl = "${main}superdeal/";
