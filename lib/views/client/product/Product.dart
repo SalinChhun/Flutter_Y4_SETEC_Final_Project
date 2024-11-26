@@ -140,20 +140,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget build(BuildContext context) {
-    print("Product is is ${widget.productss?.id}");
-    // TODO: implement build
-    print("Render again");
-    print(isfavorite);
     allproduct = widget.productss;
-    // if(click == false) {
-    //   isfav =allproduct?.isfavorite;
-    //   print("My fav is ${widget.productss!.productname}");
-    // }
-    // else {
-    //   allproduct = widget.bothproduct;
-    //   context.read<CategoryBlocProduct>().add(FetchCategoryProduct(categoryid: allproduct!.category?.id));
-    // }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocListener<ProductFavBloc, ProductFavState>(
@@ -180,21 +167,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 });
               });
             }
-            // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            //
-            //   setState(() {
-            //     isfavorite = false;
-            //   });
-            // });
           }
         },
         child: BlocBuilder<ProductFavBloc, ProductFavState>(
           builder: (context, state) {
-            // if(state is ProductByIdLoading) {
-            //   return Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
             return SafeArea(
               child: CustomScrollView(
                 slivers: [
@@ -202,211 +178,167 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     elevation: 0,
                     leading: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: CircleAvatar(
-                          radius: 13,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.arrow_back,
-                            size: 23,
-                            color: Colors.black,
-                          ),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white.withOpacity(0.8),
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          onPressed: () => Navigator.pop(context),
                         ),
                       ),
                     ),
-
                     expandedHeight: 400,
-                    backgroundColor: Colors.white10,
-
                     flexibleSpace: CachedNetworkImage(
                       imageUrl: widget.isorderview == true
                           ? '${ApiUrl.main}${allproduct!.imgid![imgindexx].images}'
                           : '${allproduct!.imgid![imgindexx].images}',
                       // imageUrl: deal![itemIndex].imgid!.images!,
-
                       height: double.maxFinite,
                       fit: BoxFit.cover,
-
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => Center(
-                              child: Image.network(
-                        "https://fakeimg.pl/300x150?text=+",
-                        fit: BoxFit.cover,
-                      )),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(
+                          color: Color(AppColorConfig.primarycolor),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-
-                    // Image.network(
-                    //
-                    //   widget.isorderview == true ?'${ApiUrl.main}${allproduct!.imgid![imgindexx].images}' :
-                    //   '${allproduct!.imgid![imgindexx].images}'
-                    //
-                    //   ,
-                    //   fit: BoxFit.cover,
-                    //   height: 400,
-                    //
-                    //   // width: double.maxFinite,
-                    //
-                    // ),
                     actions: [
-                      InkWell(
-                        onTap: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-
-                          setState(() {
-                            print("Favroite is ${isfavorite}");
-                            if (isfavorite == false) {
-                              context.read<ProductFavBloc>().add(AddFavorite(
-                                  prefs.getInt("userid"), allproduct?.id));
-                            } else {
-                              context.read<ProductFavBloc>().add(RemoveFavorite(
-                                  prefs.getInt("userid"), allproduct?.id));
-                            }
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: isfavorite == false
-                                ? Icon(
-                                    Icons.favorite_border_outlined,
-                                    color: Color(0xffFF6E6E),
-                                  )
-                                : Icon(
-                                    Icons.favorite,
-                                    color: Color(0xffFF6E6E),
-                                  ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white.withOpacity(0.8),
+                          child: IconButton(
+                            icon: Icon(
+                              isfavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Color(0xffFF6E6E),
+                            ),
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              setState(() {
+                                isfavorite
+                                    ? context.read<ProductFavBloc>().add(
+                                        RemoveFavorite(prefs.getInt("userid"),
+                                            allproduct?.id))
+                                    : context.read<ProductFavBloc>().add(
+                                        AddFavorite(prefs.getInt("userid"),
+                                            allproduct?.id));
+                              });
+                            },
                           ),
                         ),
                       )
                     ],
-                    iconTheme: IconThemeData(color: Colors.black),
                   ),
-                  //TODO detail here
                   SliverToBoxAdapter(
                     child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 20, left: 15, right: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Product Name and Price Row
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Text(
-                                  "${allproduct!.productname}",
-                                  style: TextStyle(fontSize: 20),
+                                  allproduct?.productname ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                flex: 3,
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  width: 111,
-                                  height: 75,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffE4F9EE),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (allproduct?.discount != 0)
-                                        Text(
-                                          "\$ ${allproduct!.price}",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                              color: Color(
-                                                  AppColorConfig.negativecolor),
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromRGBO(112, 16, 223, 100),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    if (allproduct?.discount != 0)
                                       Text(
-                                        "\$ ${(allproduct!.price! - (allproduct!.price! * (double.parse(allproduct!.discount!.toString()) / 100))).toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 22,
-                                          color: Color(AppColorConfig.success),
+                                        '\$ ${allproduct?.price?.toStringAsFixed(2) ?? ''}',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    Text(
+                                      '\$ ${(allproduct?.price ?? 0.0 - (allproduct?.price ?? 0.0 * (double.parse(allproduct?.discount?.toString() ?? '0') / 100))).toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: Colors.white),
+                                    ),
+                                  ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
 
+                          SizedBox(height: 16),
+
+                          // Rating and Sales Info
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.orange,
-                                    size: 25,
-                                  ),
+                                  Icon(Icons.star,
+                                      color: Colors.orange, size: 20),
+                                  SizedBox(width: 4),
                                   Text(
                                     "${allproduct!.avgRating!.toStringAsFixed(2)}",
-                                    style: TextStyle(fontSize: 16),
-                                  )
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ],
                               ),
-                              // SizedBox(width: 25,
-                              //
-                              // ),
-                              VerticalDivider(),
-
                               Text(
                                 "${allproduct!.sellRating} sold",
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(AppColorConfig.success)),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Text(" ${widget.product!.owner?.username?.toUpperCase()}"),
-                              if (allproduct?.discount != 0)
-                                Container(
-                                  width: 78,
-                                  height: 26,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFFEBE5),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Text(
-                                    "\% ${allproduct?.discount} off",
-                                    style: TextStyle(
-                                        fontSize: 12.8,
-                                        color: Color(0xffF04438),
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  fontSize: 15,
+                                  color: Color(AppColorConfig.primarycolor),
                                 ),
+                              ),
                             ],
                           ),
 
+                          SizedBox(height: 16),
+
+                          // Discount Tag
+                          if (allproduct?.discount != 0)
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.4),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                "\% ${allproduct?.discount} off",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xffF04438),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+
+                          // Rest of the existing widgets remain the same
                           //TODO available section color
 
                           DetailSizeColor(
@@ -435,7 +367,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );
@@ -488,8 +420,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             elevation: 0,
             behavior: SnackBarBehavior.floating,
           ));
-          // ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          print("Added to cart");
         },
         builder: (context, state) {
           return Container(
@@ -512,8 +442,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: SingleChildScrollView(
-                                      child:
-                                          DetailSizeColor(
+                                      child: DetailSizeColor(
                                         attributes: allproduct?.attribution,
                                         isview: true,
                                         images: allproduct!.imgid,
@@ -528,17 +457,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                 );
                               });
-
-                      
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(AppColorConfig.success),
+                            backgroundColor: Color(AppColorConfig.primarycolor),
                             elevation: 0,
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(15),
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                     color: Colors.black.withOpacity(0.14)),
-                                borderRadius: BorderRadius.circular(3))),
+                                borderRadius: BorderRadius.circular(10))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -581,28 +508,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            padding: EdgeInsets.all(10),
+                            backgroundColor: Colors.grey,
+                            padding: EdgeInsets.all(15),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                     color: Colors.black.withOpacity(0.14)),
-                                borderRadius: BorderRadius.circular(3))),
+                                borderRadius: BorderRadius.circular(10))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Image.asset('assets/logo/shopping-cart.png',
-                            //     width: 20,
-                            //     height: 20,
-                            //     fit: BoxFit.cover,
-                            //
-                            // ),
-                            // SizedBox(width: 10,),
                             Text(
                               "Check Out",
                               style: TextStyle(
-                                fontSize: 14.8,
-                              ),
+                                  fontSize: 14.8, color: Colors.white),
                             )
                           ],
                         )),
@@ -611,7 +530,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           );
         },
       ),
-    );
+    ); // Existing bottom navigation bar code
   }
 
   void checktoken() async {
@@ -676,22 +595,6 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.iscart != null)
-          // Image.network(
-          //
-          //   widget.vieworder == true ?
-          //   '${ApiUrl.main}${attri?.colorid![imgindexx].imgid?.images}' :
-          //
-          //   '${attri?.colorid![imgindexx].imgid?.images}'
-          //
-          //
-          //
-          //   ,
-          // fit: BoxFit.contain,
-          //   width: double.maxFinite,
-          //   height: 200,
-          //
-          // ),
-
           CachedNetworkImage(
             imageUrl: widget.vieworder == true
                 ? '${ApiUrl.main}${attri?.colorid![imgindexx].imgid?.images}'
@@ -717,17 +620,14 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
             height: 20,
           ),
         if (widget.price != null)
-          // Text("\$ ${attri?.colorid![imgindexx].price! - ( attri?.colorid![imgindexx].price! * (double.parse(widget.discount!.toString() )/100)).truncateToDouble() }",
-
           if (widget?.product?.discount != null)
             Text(
               "\$ ${(attri?.colorid![imgindexx].price! - (attri?.colorid![imgindexx].price! * (double.parse(widget.product.discount.toString()) / 100))).toStringAsFixed(2)}",
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w500,
-                  color: Color(AppColorConfig.success)),
+                  color: Color(AppColorConfig.primarycolor)),
             ),
-
         if (widget.price != null)
           discount > 0
               ? Row(
@@ -754,26 +654,6 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
                   ],
                 )
               : Text(""),
-
-        // Row(
-        //   children: [
-        //     Text("\$ ${attri?.colorid![imgindexx].price! }",style: TextStyle(
-        //         fontSize: 20,
-        //         fontWeight: FontWeight.w500,
-        //         decoration: TextDecoration.lineThrough,
-        //         color: Color(AppColorConfig.negativecolor)
-        //     ),),
-        //     if(discount != 0)
-        //     SizedBox(width: 10,),
-        //     Text("-${widget.product.discount }\%",style: TextStyle(
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.w400,
-        //
-        //         color: Color(AppColorConfig.negativecolor)
-        //     ),),
-        //   ],
-        // ),
-
         SizedBox(
           height: 20,
         ),
@@ -796,7 +676,6 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
         SizedBox(
           height: 20,
         ),
-        // Text("Available color: ${attri?.colorid?[imgindexx].color}",style: Theme.of(context).textTheme.displayMedium,),
         Row(
           children: [
             Text(
@@ -834,7 +713,7 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
                             borderRadius: BorderRadius.circular(3),
                             border: Border.all(
                                 color: imgindexx == index
-                                    ? Color(AppColorConfig.success)
+                                    ? Color(AppColorConfig.primarycolor)
                                     : Colors.grey.withOpacity(0.45))),
                       ),
                     );
@@ -847,8 +726,6 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
         SizedBox(
           height: 20,
         ),
-        // Text("Available color: ${attri?.colorid?[imgindexx].color}",style: Theme.of(context).textTheme.displayMedium,),
-        // Text("Selection: ${attri?.colorid?[imgindexx].color}",style: Theme.of(context).textTheme.displayMedium,),
         SizedBox(
           height: 20,
         ),
@@ -857,56 +734,51 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
             var imglink = attri?.colorid?[index].imgid?.images;
             // print(imglink);
             return Expanded(
-                child: InkWell(
-              onTap: () {
-                print("hllo");
-
-                setState(() {
-                  imgindexx = index;
-                });
-                print(imgindexx);
-              },
-              child: Container(
-                width: 140,
-                height: 140,
-                margin: EdgeInsets.only(right: 7),
-                decoration: BoxDecoration(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    imgindexx = index;
+                  });
+                },
+                child: Container(
+                  width: 140,
+                  height: 140,
+                  margin: EdgeInsets.only(right: 7),
+                  decoration: BoxDecoration(
                     border: Border.all(
-                        width: 2,
-                        style: BorderStyle.solid,
-                        color: imgindexx == index
-                            ? Color(AppColorConfig.success)
-                            : Colors.white)),
-                child:
-
-                    // Image.network(
-                    //   widget.vieworder == true ?
-                    //   '${ApiUrl.main}${imglink}' :
-                    //   '${imglink}',
-                    //   fit: BoxFit.cover,
-                    //
-                    // )
-
-                    CachedNetworkImage(
-                  imageUrl: widget.vieworder == true
-                      ? '${ApiUrl.main}${imglink}'
-                      : '${imglink}',
-                  fit: BoxFit.cover,
-                  // imageUrl: deal![itemIndex].imgid!.images!,
-
-                  width: double.maxFinite,
-                  height: 200,
-
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Center(
-                          child: Image.network(
-                    "https://fakeimg.pl/300x150?text=+",
-                    fit: BoxFit.cover,
-                  )),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                      width: 2,
+                      style: BorderStyle.solid,
+                      color: imgindexx == index
+                          ? Color(AppColorConfig.primarycolor)
+                          : Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Adjust the radius as needed
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        18.0), // Adjust the radius as needed
+                    child: CachedNetworkImage(
+                      imageUrl: widget.vieworder == true
+                          ? '${ApiUrl.main}${imglink}'
+                          : '${imglink}',
+                      fit: BoxFit.cover,
+                      width: double.maxFinite,
+                      height: 200,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: Image.network(
+                          "https://fakeimg.pl/300x150?text=+",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  ),
                 ),
               ),
-            ));
+            );
           }),
         ),
         SizedBox(
@@ -914,7 +786,9 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
         ),
         Text(
           "Choose size: ${attri?.size![sizeindex].size}",
-          style: Theme.of(context).textTheme.displayMedium,
+          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                color: Color(AppColorConfig.primarycolor),
+              ),
         ),
         SizedBox(
           height: 20,
@@ -940,7 +814,8 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
                   margin: EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     color: sizeindex == index
-                        ? Colors.green.withOpacity(0.4)
+                        ? const Color.fromRGBO(112, 16, 223, 100)
+                            .withOpacity(0.4)
                         : Colors.grey.withOpacity(0.4),
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -985,15 +860,15 @@ class _DetailSizeColorState extends State<DetailSizeColor> {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: attri?.colorid![imgindexx].stockqty == 0
-                      ? Color(AppColorConfig.negativecolor)
-                      : Color(AppColorConfig.success),
-                  elevation: 0,
-                  padding: EdgeInsets.all(14),
-                  shape: RoundedRectangleBorder(
-                      // side: BorderSide(color: Colors.black.withOpacity(0.14)),
-                      // borderRadius: BorderRadius.circular(13)
-                      )),
+                backgroundColor: attri?.colorid![imgindexx].stockqty == 0
+                    ? Color(AppColorConfig.negativecolor)
+                    : Color(AppColorConfig.primarycolor),
+                elevation: 0,
+                padding: EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

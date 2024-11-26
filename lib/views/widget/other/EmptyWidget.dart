@@ -56,7 +56,7 @@ class EmptyCard extends StatelessWidget {
             child: ElevatedButton(
 
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(AppColorConfig.success),
+                    backgroundColor: Color(AppColorConfig.primarycolor),
                     elevation: 0,
                     padding: EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 10),
                     shape: RoundedRectangleBorder(
@@ -77,6 +77,7 @@ class EmptyCard extends StatelessWidget {
 
 
                 }, child: Text("${btntitle}",style: TextStyle(
+                  color: Colors.white,
                 fontSize: 15.8
             ),)),
           ),

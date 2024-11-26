@@ -14,7 +14,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../Home.dart';
 import '../ProductAllScreen.dart';
 
-
 class PopularSection extends StatefulWidget {
   PopularSection({
     super.key,
@@ -29,81 +28,82 @@ class _PopularSectionState extends State<PopularSection> {
   @override
   void initState() {
     // TODO: implement initState
-    context.read<ProductBlocBestRating>().add(SortProduct(rank: "DESC",sortname: "popular"));
+    context
+        .read<ProductBlocBestRating>()
+        .add(SortProduct(rank: "DESC", sortname: "popular"));
     super.initState();
-
-
   }
-  Widget build(BuildContext context) {
 
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: SizedBox(
-
         width: double.maxFinite,
         height: 290,
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Most Popular ",style:
-                Theme.of(context).textTheme.labelLarge,),
+                Text(
+                  "Most Popular ",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return  SearchScreen(
-                          sortby:1,
-                          focus:false,
-                        searchtitle: "",
-                      );
-                    },));
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return SearchScreen(
+                          sortby: 1,
+                          focus: false,
+                          searchtitle: "",
+                        );
+                      },
+                    ));
                   },
-                  child: Text("See All",style:
-                  Theme.of(context).textTheme.headlineSmall,),
+                  child: Text(
+                    "See All",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Color(AppColorConfig
+                              .primarycolor), // Change this to your desired color
+                        ),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Expanded(
-
-              child: BlocConsumer<ProductBlocBestRating,ProductState>(
+              child: BlocConsumer<ProductBlocBestRating, ProductState>(
                 listener: (context, state) {
                   // TODO: implement listener
                 },
                 builder: (context, state) {
-
-                  if(state is ProductLoading) {
-                    return Center(
-                        child:LoadingIcon()
-
-                    );
+                  if (state is ProductLoading) {
+                    return Center(child: LoadingIcon());
                   }
-                  if(state is ProductCompleted) {
+                  if (state is ProductCompleted) {
                     var allproduct = state.product!.results ?? [];
-                    int len =  allproduct.length;
+                    int len = allproduct.length;
                     return ListView.builder(
-
                       scrollDirection: Axis.horizontal,
-                      itemCount:len ,
+                      itemCount: len,
                       itemBuilder: (context, index) {
-
-                        return   CardHoriScroll(product: allproduct[index],);
-                      },);
-                  }
-                  else{
+                        return CardHoriScroll(
+                          product: allproduct[index],
+                        );
+                      },
+                    );
+                  } else {
                     return Center(
                       child: Text("Error has been occur"),
                     );
                   }
-
                 },
               ),
             )
-
-
           ],
         ),
       ),

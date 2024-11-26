@@ -80,9 +80,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo/myappicon.jpg"
+  image_path: "assets/logo/myappicon.png"
   adaptive_icon_background: "#EEEEEE"
-  adaptive_icon_foreground: "assets/logo/myappicon.jpg"
+  adaptive_icon_foreground: "assets/logo/myappicon.png"
 
 
 

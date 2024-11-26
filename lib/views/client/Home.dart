@@ -251,7 +251,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                       //TODO list Special here
                       Container(
                         width: double.maxFinite,
-                        height: 540,
+                        height: 580,
                         child: Column(
                           children: [
                             Row(
@@ -275,9 +275,9 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                                   },
                                   child: Text(
                                     "See All",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall,
+                                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                      color: Color(AppColorConfig.primarycolor), // Change this to your desired color
+                                    ),
                                   ),
                                 ),
                               ],
@@ -397,7 +397,6 @@ class CardHoriScroll extends StatefulWidget {
 }
 
 class _CardHoriScrollState extends State<CardHoriScroll> {
-
   String? getFirstImageUrl() {
     if (widget.product?.imgid == null || widget.product!.imgid!.isEmpty) {
       return null;
@@ -416,141 +415,211 @@ class _CardHoriScrollState extends State<CardHoriScroll> {
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.product!.imgid![0].images);
-
     final imageUrl = getFirstImageUrl() ?? 'http://via.placeholder.com/350x150';
 
-    return Container(
-      width: 160,
-      height: 70,
-      margin: EdgeInsets.only(right: 7),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.24))),
-      child: InkWell(
-        onTap: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return ProductDetailScreen(
-                  userid: prefs.getInt("userid"),
-                  productss: MyProductDetail(
-                      id: widget.product!.id,
-                      imgid: widget.product!.imgid,
-                      price: widget.product!.price,
-                      categoryid: widget.product!.category?.id,
-                      attribution: widget.product!.attribution,
-                      discount: widget.product!.discount,
-                      avgRating: widget.product!.avgRating,
-                      description: widget.product!.description,
-                      sellRating: widget.product!.sellRating,
-                      productname: widget.product!.productname,
-                      stockqty: widget.product!.stockqty));
-            },
-          ));
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: 125,
-                child: Stack(
-                  children: [
-                    CachedNetworkImage(
+    return GestureDetector(
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (!mounted) return;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(
+              userid: prefs.getInt("userid"),
+              productss: MyProductDetail(
+                id: widget.product!.id,
+                imgid: widget.product!.imgid,
+                price: widget.product!.price,
+                categoryid: widget.product!.category?.id,
+                attribution: widget.product!.attribution,
+                discount: widget.product!.discount,
+                avgRating: widget.product!.avgRating,
+                description: widget.product!.description,
+                sellRating: widget.product!.sellRating,
+                productname: widget.product!.productname,
+                stockqty: widget.product!.stockqty,
+              ),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        width: 180,
+        margin: const EdgeInsets.only(right: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image and Badges Section
+            Container(
+              height: 144,
+              decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // Product Image
+                  ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(16)),
+                    child: CachedNetworkImage(
                       imageUrl: imageUrl,
-                      width: double.maxFinite,
-                      height: double.maxFinite,
                       fit: BoxFit.cover,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => Center(
-                              child: CircularProgressIndicator(
-                                  color: Color(AppColorConfig.success),
-                                  value: downloadProgress.progress)),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Color(AppColorConfig.success),
+                          value: downloadProgress.progress,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[100],
+                        child:
+                            const Icon(Icons.error_outline, color: Colors.grey),
+                      ),
                     ),
+                  ),
+
+                  // Discount Badge
+                  if (widget.product!.discount != 0)
                     Positioned(
-                      top: 5,
-                      right: 0,
+                      left: 8,
+                      top: 8,
                       child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: Colors.amberAccent,
-                            ),
-                            Text(
-                              "\$ ${calculateDiscountedPrice()}",
-                              style: TextStyle(),
-                            )
-                          ],
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Color(AppColorConfig.negativecolor)
+                              .withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          "-${widget.product!.discount}%",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    if (widget.product!.discount != 0)
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Color(AppColorConfig.negativelight),
-                                border: Border.all(
-                                    color: Color(AppColorConfig.negativecolor),
-                                    width: 1)),
-                            padding: EdgeInsets.all(4),
-                            width: 43,
-                            child: Text(
-                              "${widget.product!.discount} % ",
-                              style: TextStyle(
-                                color: Color(AppColorConfig.negativecolor),
-                                // backgroundColor:    Color(AppColorConfig.negativelight)
-                              ),
-                            )),
+
+                  // Rating Badge
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                " ${widget.product!.sellRating} sold",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.7,
-                    color: Color(AppColorConfig.success)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, top: 9),
-                child: Text(
-                  "${widget.product!.productname}",
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 14.8,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              Container(
-                width: double.maxFinite,
-                padding: const EdgeInsets.only(left: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "\$ ${widget.product!.price}",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.star_rounded,
+                            size: 16,
+                            color: Colors.amber,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            widget.product!.avgRating?.toStringAsFixed(1) ??
+                                "0.0",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+
+            // Product Info Section
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product Name
+                  Text(
+                    widget.product!.productname ?? "",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Price and Discount
+                  Row(
+                    children: [
+                      Text(
+                        "\$${calculateDiscountedPrice().toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(AppColorConfig.primarycolor),
+                        ),
+                      ),
+                      if (widget.product!.discount != 0) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          "\$${widget.product!.price}",
+                          style: TextStyle(
+                            fontSize: 12,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+
+                  // Sales Count
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Color(AppColorConfig.primarycolor).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      "${widget.product!.sellRating} sold",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

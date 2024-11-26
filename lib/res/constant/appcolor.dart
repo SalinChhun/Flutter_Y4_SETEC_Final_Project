@@ -4,6 +4,7 @@ class AppColorConfig {
 
 
   static var primarycolor = 0xFF7010DF;
+  static var secondarycolor = 0xffFF7300;
   static var bgcolor  = 0xffFFFFFF;
   static var primaryswatchv2 = 0xff508A7B;
 

@@ -456,21 +456,23 @@ class _ReviewModifyState extends State<ReviewModify> {
 
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(AppColorConfig.success),
+                        backgroundColor: Color(AppColorConfig.primarycolor),
                         elevation: 0,
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(15),
                         shape: RoundedRectangleBorder(
                             side: BorderSide(
                                 color: Colors.black.withOpacity(0.14)),
-                            borderRadius: BorderRadius.circular(3)
+                            borderRadius: BorderRadius.circular(10)
                         )
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.edit_sharp, size: 18,),
+                        Icon(Icons.edit_sharp, size: 18,color: Colors.white,),
                         SizedBox(width: 5,),
-                        Text("Submit Review", style: TextStyle(
+                        Text("Submit Review", 
+                        style: TextStyle(
+                            color: Colors.white,
                             fontSize: 14.8
                         ),)
 

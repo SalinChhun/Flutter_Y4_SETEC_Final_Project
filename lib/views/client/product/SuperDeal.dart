@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/res/constant/appcolor.dart';
 import 'package:ecommerce/viewmodel/products/product_bloc.dart';
 import 'package:ecommerce/views/client/category/category.dart';
@@ -31,15 +30,13 @@ class _SuperDealListState extends State<SuperDealList> {
     // TODO: implement initState
 
     super.initState();
-
-
   }
+
   Widget build(BuildContext context) {
     BlocProvider.of<ProductDiscountBloc>(context).add(DiscountProduct());
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: SizedBox(
-
         width: double.maxFinite,
         height: 290,
         child: Column(
@@ -48,67 +45,70 @@ class _SuperDealListState extends State<SuperDealList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Super Deal",style:
-                Theme.of(context).textTheme.labelLarge,),
+                Text(
+                  "Super Deal",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return  SearchScreen(
-                          sortby:2,
-                          focus:false,
-                        searchtitle: '',
-                      );
-                    },));
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return SearchScreen(
+                          sortby: 2,
+                          focus: false,
+                          searchtitle: '',
+                        );
+                      },
+                    ));
                   },
-                  child: Text("See All",style:
-                  Theme.of(context).textTheme.headlineSmall,),
+                  child: Text(
+                    "See All",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Color(AppColorConfig
+                              .primarycolor), // Change this to your desired color
+                        ),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Expanded(
-
-              child: BlocConsumer<ProductDiscountBloc,ProductState>(
+              child: BlocConsumer<ProductDiscountBloc, ProductState>(
                 listener: (context, state) {
                   // TODO: implement listener
                 },
                 builder: (context, state) {
-
-                  if(state is ProductLoadingDiscount) {
-                    return Center(
-                        child:LoadingIcon()
-
-                    );
+                  if (state is ProductLoadingDiscount) {
+                    return Center(child: LoadingIcon());
                   }
-                  if(state is ProductDiscountCompleted) {
+                  if (state is ProductDiscountCompleted) {
                     var productlen = state.product!.results!.length;
                     var allproduct = state.product!.results;
-                    int len =  productlen;
+                    int len = productlen;
                     return ListView.builder(
-
                       scrollDirection: Axis.horizontal,
-                      itemCount:productlen ,
+                      itemCount: productlen,
                       itemBuilder: (context, index) {
-
-                        return   CardHoriScroll(product: allproduct![index],);
-                      },);
+                        return CardHoriScroll(
+                          product: allproduct![index],
+                        );
+                      },
+                    );
                   }
-                  if(state is ProductErrorDiscount){
+                  if (state is ProductErrorDiscount) {
+                    return Center(
+                      child: Text("Error has been occur"),
+                    );
+                  } else {
                     return Center(
                       child: Text("Error has been occur"),
                     );
                   }
-                  else{
-                    return Center(
-                      child: Text("Error has been occur"),
-                    );
-                  }
-
                 },
               ),
             )
-
-
           ],
         ),
       ),

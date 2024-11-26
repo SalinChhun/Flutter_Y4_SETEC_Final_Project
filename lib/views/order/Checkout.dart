@@ -84,7 +84,6 @@ class _CheckoutState extends State<Checkout> {
     print("Checkout userid");
     print(widget.uid);
 
-    // BlocProvider.of<AddressBloc>(context).add(FetchAddress(userid: widget!.uid));
   }
 
   @override
@@ -209,8 +208,6 @@ class _CheckoutState extends State<Checkout> {
             List<Productss>? item = [];
 
             for (int index = 0; index < cart!.length; index++) {
-              // print(cart[index].sizeid);
-              // print(cart[index].colorid.id);
               item.add(Productss(
                 id: cart![index].productid,
                 quantity: cart![index].qty,
@@ -239,11 +236,6 @@ class _CheckoutState extends State<Checkout> {
                             order: state?.orderReponse,
                           )));
             });
-            //TODO use this whenever u want to push neww screen after state updated
-            // Navigator.push(context, MaterialPageRoute(
-            //   builder: (context) {
-            //   return Success();
-            // },));
           }
           if (state is OrderError) {
             return Center(
@@ -257,11 +249,6 @@ class _CheckoutState extends State<Checkout> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text("Free Shipping",style: TextStyle(
-                      //   fontSize: 12.8,
-                      //   fontWeight: FontWeight.w500,
-                      //   color: Color(AppColorConfig.success)
-                      // ),),
                       SizedBox(
                         height: 20,
                       ),
@@ -538,24 +525,7 @@ class _CheckoutState extends State<Checkout> {
                                                         print(mapofaddress);
 
                                                         setState(() {
-                                                          // if(mapofaddress!=null || mapofaddress != '') {
-                                                          //   print("Send here");
-                                                          //   BlocProvider.of<AddressBloc>(context, listen: false)
-                                                          //       .add(PostAddress(
-                                                          //       add: AddressBody(
-                                                          //         city: city,
-                                                          //         country: country,
-                                                          //         lat:lat,
-                                                          //         lon: long,
-                                                          //         street: homeadd,
-                                                          //
-                                                          //
-                                                          //
-                                                          //       ),
-                                                          //       userid: userid,
-                                                          //       desc: txtdesc.text
-                                                          //   ));
-                                                          // }
+                                                        
                                                         });
                                                       },
                                                     ),
@@ -663,12 +633,7 @@ class _CheckoutState extends State<Checkout> {
                                               ),
                                             ],
                                           ),
-                                          // decoration: BoxDecoration(
-                                          //     // color: Colors.white,
-                                          //     border: Border.all(
-                                          //         // color: Colors.grey.withOpacity(0.2)
-                                          //     )
-                                          // ),
+
                                         )
                                       : ListView.builder(
                                           scrollDirection: Axis.vertical,
@@ -965,122 +930,6 @@ class _CheckoutState extends State<Checkout> {
                             height: 20,
                           ),
 
-                          //     Container(
-                          //       padding: EdgeInsets.only(left: 15,top: 10,bottom: 30),
-                          //       margin: EdgeInsets.only(top: 5),
-                          //
-                          //       child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           // Text("Please select your method of payment",style: TextStyle(
-                          //           //
-                          //           //   fontSize: 12.8,
-                          //           // ),),
-                          //           SizedBox(height: 20,),
-                          //
-                          //           Row(
-                          //             crossAxisAlignment: CrossAxisAlignment.start,
-                          //
-                          //             children: [
-                          //
-                          // //TODO by Cash
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   setState(() {
-                          //                     initpayment  = 0;
-                          //
-                          //                   });
-                          //                 },
-                          //                 child: Container(
-                          //
-                          //                   decoration: BoxDecoration(
-                          //                     color:
-                          //
-                          //                     selectedmethod == initpayment?
-                          //                         Color(AppColorConfig.success) :
-                          //                     Colors.white,
-                          //                     borderRadius: BorderRadius.circular(10)
-                          //                   ),
-                          //                   alignment: Alignment.center,
-                          //                   width: 121.08,
-                          //                   height: 89,
-                          //                   child: Column(
-                          //                     mainAxisAlignment: MainAxisAlignment.center,
-                          //                     children: [
-                          //                       Image.asset('assets/logo/Money icon.png',
-                          //
-                          //                       width: 50,
-                          //                           height: 50,
-                          //                       ),
-                          //                       Text('Cash',style: TextStyle(
-                          //                         color:
-                          //                         initpayment == 0?
-                          //                         Colors.white :
-                          //
-                          //                           Color(AppColorConfig.success)
-                          //                       ),)
-                          //
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //               SizedBox(width: 10,),
-                          //               //TODO by payment method
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   setState(() {
-                          //                     initpayment = 1;
-                          //
-                          //                   });
-                          //                 },
-                          //                 child: Container(
-                          //
-                          //                   decoration: BoxDecoration(
-                          //                       color:
-                          //                       initpayment == 1?
-                          //                       Color(AppColorConfig.success) :
-                          //                       Colors.white,
-                          //                       borderRadius: BorderRadius.circular(10)
-                          //                   ),
-                          //                   alignment: Alignment.center,
-                          //                   width: 121.08,
-                          //                   height: 89,
-                          //                   child: Column(
-                          //                     mainAxisAlignment: MainAxisAlignment.center,
-                          //                     children: [
-                          //                       Image.asset('assets/logo/Credit Card Icon.png',
-                          //
-                          //                         width: 50,
-                          //                         height: 50,
-                          //                       color:
-                          //
-                          //
-                          //                       initpayment == 1?
-                          //                       Colors.white:
-                          //                       Colors.black,
-                          //
-                          //                       ),
-                          //                       Text('MasterCard ',style: TextStyle(
-                          //                         color:
-                          //                         initpayment == 1?
-                          //                         Colors.white:
-                          //                         Colors.black,
-                          //
-                          //
-                          //                       ),)
-                          //
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ],
-                          //       ),
-                          //       decoration: BoxDecoration(
-                          //           color: Color(0xffF5F5F5)
-                          //       ),
-                          //     ),
                           SizedBox(
                             height: 40,
                           ),
@@ -1225,12 +1074,12 @@ class _CheckoutState extends State<Checkout> {
               children: [
                 Expanded(
                   child: FloatingActionButton.extended(
-                      backgroundColor: Color(AppColorConfig.success),
+                      backgroundColor: Color(AppColorConfig.primarycolor),
                       elevation: 0,
                       isExtended: true,
                       extendedPadding: EdgeInsets.all(0),
                       shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)),
+                          borderRadius: BorderRadius.circular(10)),
                       //
                       // shape: RoundedRectangleBorder(
                       //     borderRadius: BorderRadius.circular(14)
@@ -1299,10 +1148,6 @@ class _CheckoutState extends State<Checkout> {
                           }).catchError((err) {
                             print(err);
                           });
-
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          //   return TestScreen(currency: 'USD',total: total.ceil(),);
-                          // },));
                         }
                         //
 
@@ -1322,7 +1167,7 @@ class _CheckoutState extends State<Checkout> {
                       },
                       label: Text(
                         'Place Order',
-                        style: TextStyle(fontSize: 15.8),
+                        style: TextStyle(fontSize: 15.8,color: Colors.white),
                       )),
                 ),
               ],
