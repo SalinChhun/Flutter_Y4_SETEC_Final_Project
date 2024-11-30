@@ -306,7 +306,7 @@ var totalpage;
                                         progressIndicatorBuilder: (context, url, downloadProgress) =>
                                             Center(child:
                                             CircularProgressIndicator(
-                                                color: Color(AppColorConfig.success),
+                                                color: Color(AppColorConfig.primarycolor),
 
                                                 value: downloadProgress.progress)),
                                         errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -374,7 +374,7 @@ var totalpage;
                                         padding: const EdgeInsets.only(left: 8),
                                         child: Text("${product.sellRating} sold", style: TextStyle(
                                             fontSize: 12.8,
-                                            color: Color(AppColorConfig.success)
+                                            color: Color(AppColorConfig.primarycolor)
                                         ),),
                                       )
                                     ],
@@ -412,7 +412,7 @@ var totalpage;
                                           ),
                                           child: CircleAvatar(
                                             backgroundColor: Color(
-                                                AppColorConfig.success),
+                                                AppColorConfig.primarycolor),
                                             radius: 12,
 
 

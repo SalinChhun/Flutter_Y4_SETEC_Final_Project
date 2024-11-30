@@ -163,7 +163,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Color(0xffC2E5DF),
+                          color: Color.fromRGBO(112, 16, 223, 100)
+                                            .withOpacity(0.4),
                           borderRadius: BorderRadius.circular(10)
                       ),
                       child: Column(
@@ -266,7 +267,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             onTap: () async {
                               Navigator.push(
                                   context, MaterialPageRoute(builder: (context) {
-                                return AddressProductScr(userid:    uid ,);
+                                return AddressProductScr();
                               },));
                             },
                           ),

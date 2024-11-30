@@ -13,7 +13,6 @@ import '../../../viewmodel/cart/cart_bloc.dart';
 import '../../../viewmodel/category/category_bloc.dart';
 import '../../../viewmodel/products/product_bloc.dart';
 import '../../order/Cart.dart';
-import '../../order/Checkout.dart';
 import '../Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -27,7 +27,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         print(event.addressid);
             var res = await orderRepository.PostOrderUser(event.addressid,event.orderRequestV2);
             // print(res.toString());
-            print(res);
+            print('response${res}');
             emit(OrderSuccessCompleted(orderReponse: res));
             print("state change");
             // emit(OrderSuccess(res));

@@ -171,325 +171,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                 .headlineLarge,),
 
             SizedBox(height: 10,),
-            // Container(
-            //
-            //
-            //   child: TextFormField(
-            //     onSaved: (newValue) {
-            //
-            //     },
-            //     keyboardType: TextInputType.number,
-            //     maxLines: 1,
-            //     maxLength: 1,
-            //     focusNode: alwaysfocus,
-            //
-            //
-            //     cursorColor: Colors.green,
-            //     onChanged: (value) {
-            //
-            //
-            //
-            //
-            //     },
-            //     textInputAction: TextInputAction.next,
-            //     decoration: InputDecoration(
-            //       counterStyle: TextStyle(height: double.minPositive,),
-            //       counterText: "",
-            //       enabledBorder: UnderlineInputBorder(
-            //           borderSide: BorderSide(
-            //             color: Colors.grey,
-            //           )
-            //       ),
-            //       focusedBorder:  UnderlineInputBorder(
-            //           borderSide: BorderSide(
-            //             color: Colors.green,
-            //           )
-            //       ),
-            //     ),
-            //
-            //     style: TextStyle(
-            //         fontSize: 27
-            //     ),
-            //     controller: txtfirst,
-            //     textAlign: TextAlign.center,
-            //   ),
-            //
-            //   height: 60,
-            //   width: 60,
-            // ),
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //           children: [
-    //
-    //             Container(
-    //
-    //
-    //               child: TextFormField(
-    //                 onSaved: (newValue) {
-    //
-    //                 },
-    //                 keyboardType: TextInputType.number,
-    //                 maxLines: 1,
-    //                 autofocus: true,
-    //                 maxLength: 1,
-    //
-    //                 onTap: () {
-    //                   fnodetwo.unfocus();
-    //                   fnodeone.requestFocus();
-    //                   print("ON Tap");
-    //                 },
-    //
-    //                 focusNode: fnodeone,
-    //
-    //
-    //
-    //                 cursorColor: Colors.green,
-    //                 onChanged: (value) {
-    //                   if(value.toString().isEmpty) {
-    //                     fnodeone.requestFocus();
-    //                     fnodetwo.unfocus();
-    //                   }
-    //                   else{
-    //                     fnodeone.unfocus();
-    //                     fnodetwo.requestFocus();
-    //                   }
-    //
-    //
-    //
-    //
-    //                 },
-    //
-    //                 textInputAction: TextInputAction.next,
-    //                 decoration: InputDecoration(
-    //                   counterStyle: TextStyle(height: double.minPositive,),
-    //                   counterText: "",
-    //                   enabledBorder: UnderlineInputBorder(
-    //                     borderSide: BorderSide(
-    //                       color: Colors.grey,
-    //                     )
-    //                   ),
-    //                   focusedBorder:  UnderlineInputBorder(
-    //                 borderSide: BorderSide(
-    //                 color: Colors.green,
-    //                 )
-    // ),
-    //                 ),
-    //
-    //                 style: TextStyle(
-    //                   fontSize: 27
-    //                 ),
-    //                 controller: txtfirst,
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //
-    //               height: 60,
-    //               width: 60,
-    //             ),
-    //             Container(
-    //
-    //
-    //               child: TextFormField(
-    //                 onSaved: (newValue) {
-    //
-    //                 },
-    //                 keyboardType: TextInputType.number,
-    //                 maxLines: 1,
-    //                 maxLength: 1,
-    //                 focusNode: fnodetwo,
-    //                 onChanged: (value) {
-    //
-    //
-    //                   if(value.toString().isEmpty) {
-    //                     fnodetwo.requestFocus();
-    //                     fnodethr.unfocus();
-    //                   }
-    //                   else{
-    //                     fnodetwo.unfocus();
-    //                     fnodethr.requestFocus();
-    //                   }
-    //                 },
-    //
-    //
-    //                 cursorColor: Colors.green,
-    //                 textInputAction: TextInputAction.next,
-    //                 decoration: InputDecoration(
-    //                   counterStyle: TextStyle(height: double.minPositive,),
-    //
-    //                   counterText: "",
-    //                   enabledBorder: UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.grey,
-    //                       )
-    //                   ),
-    //                   focusedBorder:  UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.green,
-    //                       )
-    //                   ),
-    //                 ),
-    //
-    //                 style: TextStyle(
-    //                     fontSize: 27
-    //                 ),
-    //                 controller: txtsec,
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //
-    //               height: 60,
-    //               width: 60,
-    //             ),
-    //             Container(
-    //
-    //
-    //               child: TextFormField(
-    //                 onSaved: (newValue) {
-    //
-    //                 },
-    //                 keyboardType: TextInputType.number,
-    //                 maxLines: 1,
-    //                 maxLength: 1,
-    //                 focusNode: fnodethr,
-    //                 onChanged: (value) {
-    //
-    //                   if(value.toString().isEmpty) {
-    //                     fnodethr.requestFocus();
-    //                     fnodefou.unfocus();
-    //                   }
-    //                   else{
-    //                     fnodethr.unfocus();
-    //                     fnodefou.requestFocus();
-    //                   }
-    //                 },
-    //
-    //
-    //                 cursorColor: Colors.green,
-    //                 textInputAction: TextInputAction.next,
-    //                 decoration: InputDecoration(
-    //                   counterStyle: TextStyle(height: double.minPositive,),
-    //                   counterText: "",
-    //                   enabledBorder: UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.grey,
-    //                       )
-    //                   ),
-    //                   focusedBorder:  UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.green,
-    //                       )
-    //                   ),
-    //                 ),
-    //
-    //                 style: TextStyle(
-    //                     fontSize: 27
-    //                 ),
-    //                 controller: txtthird,
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //
-    //               height: 60,
-    //               width: 60,
-    //             ),
-    //             Container(
-    //
-    //
-    //               child: TextFormField(
-    //                 onSaved: (newValue) {
-    //
-    //                 },
-    //                 keyboardType: TextInputType.number,
-    //                 maxLines: 1,
-    //                 maxLength: 1,
-    //                 focusNode: fnodefou,
-    //                 onChanged: (value) {
-    //
-    //                   if(value.toString().isEmpty) {
-    //                     fnodefou.requestFocus();
-    //                     fnodefif.unfocus();
-    //                   }
-    //                   else{
-    //                     fnodefou.unfocus();
-    //                     fnodefif.requestFocus();
-    //                   }
-    //                 },
-    //
-    //
-    //                 cursorColor: Colors.green,
-    //                 textInputAction: TextInputAction.next,
-    //                 decoration: InputDecoration(
-    //                   counterStyle: TextStyle(height: double.minPositive,),
-    //                   counterText: "",
-    //                   enabledBorder: UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.grey,
-    //                       )
-    //                   ),
-    //                   focusedBorder:  UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.green,
-    //                       )
-    //                   ),
-    //                 ),
-    //
-    //                 style: TextStyle(
-    //                     fontSize: 27
-    //                 ),
-    //                 controller: txtfourth,
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //
-    //               height: 60,
-    //               width: 60,
-    //             ),
-    //             Container(
-    //
-    //
-    //               child: TextFormField(
-    //                 onSaved: (newValue) {
-    //
-    //                 },
-    //                 keyboardType: TextInputType.number,
-    //                 maxLines: 1,
-    //                 maxLength: 1,
-    //                 focusNode: fnodefif,
-    //
-    //
-    //                 cursorColor: Colors.green,
-    //                 onChanged: (value) {
-    //                   print("Last value ");
-    //                   // fnodefif.unfocus();
-    //
-    //
-    //                 },
-    //                 textInputAction: TextInputAction.next,
-    //                 decoration: InputDecoration(
-    //                   counterStyle: TextStyle(height: double.minPositive,),
-    //                   counterText: "",
-    //                   enabledBorder: UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.grey,
-    //                       )
-    //                   ),
-    //                   focusedBorder:  UnderlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         color: Colors.green,
-    //                       )
-    //                   ),
-    //                 ),
-    //
-    //                 style: TextStyle(
-    //                     fontSize: 27
-    //                 ),
-    //                 controller: fifth,
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //
-    //               height: 60,
-    //               width: 60,
-    //             ),
-    //
-    //           ],
-    //         ),
-
 
             Text(
               "An verfication code has sent to your email related to your account ",
@@ -506,7 +187,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               length: 5,
               obscureText: false,
               pinTheme: PinTheme(
-                activeColor: Color(AppColorConfig.success),
+                activeColor: Color(AppColorConfig.primarycolor),
                 activeFillColor: Colors.grey,
                 selectedFillColor: Colors.grey,
                 inactiveColor: Colors.red,
@@ -543,7 +224,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                           padding: EdgeInsets.all(12),
-                backgroundColor: Color(AppColorConfig.success)
+                backgroundColor: Color(AppColorConfig.primarycolor)
             ),
                       onPressed: () {
                         showDialog(context: context, builder: (context) {
@@ -558,14 +239,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                           );
 
                         },);
-                        print(txtfirst.text);
-                        print(txtsec.text);
-                        print(txtthird.text);
-                        print(txtfourth.text);
-                        print(fifth.text);
-                        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-                        //   return VerifyPassword();
-                        // },), (route) => false);
                         var code = txtfirst.text+txtsec.text+txtthird.text+txtfourth.text+fifth.text;
                         print(code);
 
@@ -579,13 +252,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                         ));
 
 
-                  }, child: Text("Done")),
+                  }, child: Text("Done", style: TextStyle(color: Colors.white),)),
                 ),
               ],
             ),
-
-
-
             SizedBox(height: 40,),
             InkWell(
               onTap: () {
@@ -615,7 +285,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   Text(
                     "Resend Code ",
                     style: TextStyle(
-                      color: Color(AppColorConfig.success),
+                      color: Color(AppColorConfig.primarycolor),
                       fontSize: 12.8,
                     ),
                     textAlign: TextAlign.center,

@@ -51,12 +51,6 @@ class _MyWishScreenState extends State<MyWishScreen> {
           onTap: () => Navigator.pop(context),
           child: Icon(Icons.close, color: Colors.white),
         ),
-
-
-        // CircleAvatar(
-        //   radius: 20,
-        //   backgroundImage: NetworkImage('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww&w=1000&q=80'),
-        // ),
         backgroundColor: Colors.black,
         elevation: 0,
 
@@ -198,17 +192,11 @@ class _MyWishScreenState extends State<MyWishScreen> {
                                     SizedBox(height: 5,),
                                     Text("\$ ${product.price}",style: TextStyle(
                                         fontSize: 17.8,
-                                        color: Color(AppColorConfig.success),
+                                        color: Color(AppColorConfig.primarycolor),
                                         fontWeight: FontWeight.w500
                                     ),),
                                     SizedBox(height: 10,),
                                     Container(
-
-
-
-
-
-
                                         decoration: BoxDecoration(
                                             color  :    Color(AppColorConfig.negativelight),
                                             border: Border.all(color:  Color(AppColorConfig.negativecolor),

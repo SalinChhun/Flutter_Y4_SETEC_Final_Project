@@ -111,7 +111,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                   Text(
                     "Categories",
                     style: TextStyle(
-                        color: Color(AppColorConfig.success),
+                        color: Color(AppColorConfig.primarycolor),
                         fontSize: 15.8,
                         fontWeight: FontWeight.w500),
                   ),
@@ -159,7 +159,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                                     decoration: BoxDecoration(
                                         color:
                                         selectcate == index ?
-                                        Color(AppColorConfig.success)
+                                        Color(AppColorConfig.primarycolor)
 
                                             :
                                         Colors.white,
@@ -216,7 +216,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                   Text(
                     "Prices Range",
                     style: TextStyle(
-                      color: Color(AppColorConfig.success),
+                      color: Color(AppColorConfig.primarycolor),
                       fontSize: 15.8,
                     ),
                   ),
@@ -336,7 +336,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                   Text(
                     "Sort By",
                     style: TextStyle(
-                      color: Color(AppColorConfig.success),
+                      color: Color(AppColorConfig.primarycolor),
                       fontSize: 15.8,
                     ),
                   ),
@@ -373,10 +373,10 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: selectedcategory == index
-                                ? Color(AppColorConfig.success)
+                                ? Color(AppColorConfig.primarycolor)
                                 : null,
                             border: selectedcategory == index
-                                ? Border.all(color: Colors.green)
+                                ? Border.all(color: Color(AppColorConfig.primarycolor))
                                 : Border.all(color: Colors.grey.withOpacity(
                                 0.25)),
                             borderRadius: BorderRadius.circular(6)),
@@ -391,7 +391,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                                   color: selectedcategory == index
                                       ? Color(
                                       AppColorConfig.primarylight)
-                                      : Color(AppColorConfig.success)),
+                                      : Color(AppColorConfig.primarycolor)),
                             ),
                           ],
                         ),
@@ -404,6 +404,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
               child: ElevatedButton(
 
                 child: Text("Apply", style: TextStyle(
+                  color: Colors.white,
                     fontSize: 12.8
                 ),),
                 onPressed: () {
@@ -430,7 +431,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                   ));
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(AppColorConfig.success)
+                    backgroundColor: Color(AppColorConfig.primarycolor)
                 ),
               ),
 

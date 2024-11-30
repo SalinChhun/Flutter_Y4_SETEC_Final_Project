@@ -2,7 +2,7 @@ class AddressBody {
 
   var street;
   var city;
- double? lat;
+  double? lat;
   double? lon;
   var country;
   var desc;

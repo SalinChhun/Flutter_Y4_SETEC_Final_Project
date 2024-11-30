@@ -1,5 +1,5 @@
 import 'package:ecommerce/res/constant/appcolor.dart';
-import 'package:ecommerce/viewmodel/products/address_bloc.dart';
+import 'package:ecommerce/views/order/DeliveryAddress.dart';
 
 import 'package:ecommerce/views/order/Success.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +15,8 @@ import '../../helper/StripeService.dart';
 import '../../model/Address.dart';
 import '../../model/Order/OrderRequest.dart';
 import '../../model/Product/CartModel.dart';
-import '../../service/GoogleMap/GoogleMapScreen.dart';
 import '../../viewmodel/order/order_bloc.dart';
-import '../Address/AddressScreen.dart';
-import '../testpayment.dart';
-import '../widget/LoadingIcon.dart';
-import '../widget/Product/FloatingAction.dart';
-import 'package:lottie/lottie.dart';
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'CompleteOrder.dart';
 
 class Checkout extends StatefulWidget {
   List<CartItem>? cartitem;
@@ -54,67 +46,30 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout> {
   Map<String, dynamic>? paymentintent;
-  var address;
-  var imagepreviewurl;
-  var selectedIndexAddress = 0;
+
   var indexchose = 0;
   var initpayment = 0;
   var selectedmethod = 0;
   int? addressid;
   var userinput = TextEditingController();
-  var long;
-  var lat;
-  var mapofaddress;
   var istap = true;
   var showiconpwd = false;
-  var homeadd;
-  var city;
-  var country;
-  var userid;
+
   var iserrordesc = true;
   var txtdesc = TextEditingController();
   var formdesc = GlobalKey<FormState>();
-  var add;
-  LocationHelper locationhelper = LocationHelper();
-  @override
-  void initState() {
-    // TODO: implement initState
-    BlocProvider.of<AddressBloc>(context).add(FetchAddress(userid: widget.uid));
-    super.initState();
-    print("Checkout userid");
-    print(widget.uid);
 
+  void _onAddressSelected(int? addressId) {
+    setState(() {
+      print('select address id ${addressId}');
+      addressid = addressId;
+    });
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-
     super.didChangeDependencies();
-  }
-
-  SendLatandLong(lat, long) async {
-    mapofaddress = await locationhelper.getPlaceWithLatLng(lat, long);
-
-    print('call');
-    print(mapofaddress);
-
-    print(mapofaddress[5]["address_components"][5]["long_name"]);
-    homeadd = mapofaddress[0]['formatted_address'];
-    // print(mapofaddress[0]["address_components"][6]["long_name"]);
-    country = mapofaddress[0]["address_components"][6]["long_name"];
-    city = mapofaddress[5]["address_components"][5]["long_name"];
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    BlocProvider.of<AddressBloc>(context, listen: false).add(PostAddress(
-        add: AddressBody(
-          city: city,
-          country: country,
-          lat: lat,
-          lon: long,
-          street: homeadd,
-        ),
-        userid: prefs?.getInt('userid'),
-        desc: txtdesc.text));
   }
 
   void PopUpUnauthorize(BuildContext context) {
@@ -128,7 +83,7 @@ class _CheckoutState extends State<Checkout> {
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w500,
-              color: Color(AppColorConfig.success),
+              color: Color(AppColorConfig.primarycolor),
             ),
           ),
           content: Text(
@@ -148,12 +103,12 @@ class _CheckoutState extends State<Checkout> {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(AppColorConfig.success),
+                    backgroundColor: Color(AppColorConfig.primarycolor),
                     elevation: 0,
                     padding: EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.black.withOpacity(0.14)),
-                        borderRadius: BorderRadius.circular(3))),
+                        borderRadius: BorderRadius.circular(10))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -162,9 +117,7 @@ class _CheckoutState extends State<Checkout> {
                     ),
                     Text(
                       "Comfirm",
-                      style: TextStyle(
-                        fontSize: 12.8,
-                      ),
+                      style: TextStyle(fontSize: 12.8, color: Colors.white),
                     )
                   ],
                 ))
@@ -208,6 +161,8 @@ class _CheckoutState extends State<Checkout> {
             List<Productss>? item = [];
 
             for (int index = 0; index < cart!.length; index++) {
+              // print(cart[index].sizeid);
+              // print(cart[index].colorid.id);
               item.add(Productss(
                 id: cart![index].productid,
                 quantity: cart![index].qty,
@@ -249,6 +204,11 @@ class _CheckoutState extends State<Checkout> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Text("Free Shipping",style: TextStyle(
+                      //   fontSize: 12.8,
+                      //   fontWeight: FontWeight.w500,
+                      //   color: Color(AppColorConfig.success)
+                      // ),),
                       SizedBox(
                         height: 20,
                       ),
@@ -258,108 +218,152 @@ class _CheckoutState extends State<Checkout> {
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: cart?.length ?? 0,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             Color colorcode =
                                 HexColor(cart?[index].colorid.code);
-                            // print(colorcode);
-                            // print(cart?.length);
                             return Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              decoration: BoxDecoration(),
-                              child: ListTile(
-                                onTap: () {},
-
-                                contentPadding: EdgeInsets.all(0),
-                                leading: Image.network(
-                                  '${cart![index].imgurl}',
-                                  fit: BoxFit.contain,
-                                  width: 100,
-                                  height: 100,
-                                ),
-
-                                title: Text(
-                                  '${cart![index].producttitle}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: 8),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
                                   ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 2,
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  // Product Image
+                                  Container(
+                                    width: 90,
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            '${cart![index].imgurl}'),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Size: ${cart[index].sizetext} ',
-                                          style: TextStyle(
-                                            fontSize: 11.8,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Color:  ',
-                                          style: TextStyle(
-                                            fontSize: 11.8,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 12.5,
-                                          margin: EdgeInsets.only(right: 5),
-                                          height: 12.5,
-                                          // child: Text(attri?.colorid[index].code),
-                                          decoration: BoxDecoration(
-                                            color: colorcode,
-                                            borderRadius:
-                                                BorderRadius.circular(3),
-                                            border: Border.all(
-                                                color: Colors.grey
-                                                    .withOpacity(0.5)),
-                                          ),
-                                        ),
-                                        Text(
-                                          '\ Total: \$ ${(cart[index].price * (cart[index].qty)).toStringAsFixed(2)}',
-                                          style: TextStyle(
-                                              fontSize: 11.5,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(
-                                                  AppColorConfig.success)),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
+                                  ),
+
+                                  // Product Details
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          // Product Title
                                           Text(
-                                            '\$ ${cart[index].price.toStringAsFixed(2)}',
+                                            '${cart![index].producttitle}',
                                             style: TextStyle(
-                                                fontSize: 18.9,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(
-                                                    AppColorConfig.success)),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black87,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          
+
+                                          const SizedBox(height: 8),
+
+                                          // Product Details Row
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              // Size and Color
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Size: ${cart[index].sizetext} • ',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color:
+                                                          Colors.grey.shade600,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    width: 16,
+                                                    height: 16,
+                                                    decoration: BoxDecoration(
+                                                      color: colorcode,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              // Quantity
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 4),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Text(
+                                                  'Qty: ${cart![index].qty}',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey.shade700,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          const SizedBox(height: 8),
+
+                                          // Price and Total
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '\$${cart[index].price.toStringAsFixed(2)}',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color(AppColorConfig
+                                                      .primarycolor),
+                                                ),
+                                              ),
+                                              Text(
+                                                'Total: \$${(cart[index].price * cart[index].qty).toStringAsFixed(2)}',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey.shade800,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-
-                                trailing: Text(
-                                  'Qty: x ${cart![index].qty}',
-                                  style: TextStyle(
-                                      fontSize: 12.8, color: Colors.black),
-                                ),
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -389,439 +393,8 @@ class _CheckoutState extends State<Checkout> {
                             height: 30,
                           ),
                           //TODO address
-                          Container(
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                    color: Colors.grey.withOpacity(0.2))),
-                            height: 300,
-                            child: BlocConsumer<AddressBloc, AddressState>(
-                              listener: (context, state) {
-                                // TODO: implement listener
-                                print("The State of Address is ${state}");
-                                if (state is AddressPostDone) {
-                                  print("THe address is done");
-
-                                  // Future.delayed(Duration(seconds: 2),() => Navigator.pop(context),);
-                                  context
-                                      .read<AddressBloc>()
-                                      .add(FetchAddress(userid: widget.uid));
-                                }
-                              },
-                              builder: (context, state) {
-                                if (state is AddressLoading) {
-                                  return Center(child: LoadingIcon());
-                                }
-                                if (state is AddressError) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                if (state is AddressDone) {
-                                  print("Address Done");
-                                  print(state.add?.results?.length);
-                                  var len = state.add?.results?.length;
-                                  print(len);
-                                  var previewimages;
-
-                                  if (state.add?.results!.length != 0) {
-                                    if (add == null) {
-                                      previewimages =
-                                          LocationHelper.staticmapurl(
-                                              latitute: double.parse(state
-                                                  .add!
-                                                  .results![len! - 1]
-                                                  .latitude!),
-                                              longtitute: double.parse(state
-                                                  .add!
-                                                  .results![len! - 1]
-                                                  .longitude!));
-                                    } else {
-                                      previewimages =
-                                          LocationHelper.staticmapurl(
-                                              latitute:
-                                                  double.parse(add['latitute']),
-                                              longtitute: double.parse(
-                                                  add['longtitute']!));
-                                    }
-                                  }
-
-                                  return state.add?.results?.length == 0
-                                      ? Container(
-                                          width: double.maxFinite,
-
-                                          margin: EdgeInsets.only(
-                                              bottom: 10, right: 10),
-
-                                          padding: EdgeInsets.only(
-                                              top: 0,
-                                              bottom: 35,
-                                              left: 0,
-                                              right: 0),
-
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    InkWell(
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.location_on,
-                                                            color: Colors.white,
-                                                            size: 20,
-                                                          ),
-                                                          Text(
-                                                            "Current Location",
-                                                            style: TextStyle(
-                                                                fontSize: 12.8,
-                                                                color: Colors
-                                                                    .white),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      onTap: () async {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return Center(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color: Color(
-                                                                    AppColorConfig
-                                                                        .bgcolor),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                        Future.delayed(
-                                                          Duration(seconds: 2),
-                                                          () => Navigator.pop(
-                                                              context),
-                                                        );
-                                                        print("On Tap called");
-                                                        print("Tap");
-
-                                                        var location =
-                                                            await Location()
-                                                                .getLocation();
-                                                        print(
-                                                            location.latitude);
-                                                        print(
-                                                            location.longitude);
-                                                        SendLatandLong(
-                                                            location.latitude,
-                                                            location.longitude);
-                                                        print(
-                                                            "Get Location latitute and longitutee");
-                                                        print(mapofaddress);
-
-                                                        setState(() {
-                                                        
-                                                        });
-                                                      },
-                                                    ),
-                                                    InkWell(
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.map,
-                                                            color: Colors.white,
-                                                            size: 20,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Text(
-                                                            "Select On Map",
-                                                            style: TextStyle(
-                                                                fontSize: 12.8,
-                                                                color: Colors
-                                                                    .white),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      onTap: () async {
-                                                        var location =
-                                                            await Location()
-                                                                .getLocation();
-                                                        print(
-                                                            "User current location");
-                                                        print(
-                                                            location.longitude);
-                                                        print(
-                                                            location.latitude);
-
-                                                        address =
-                                                            await Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                          builder: (context) {
-                                                            return GoogleMapScreen(
-                                                              positionlong:
-                                                                  location
-                                                                      .longitude,
-                                                              positionlat:
-                                                                  location
-                                                                      .latitude,
-                                                            );
-                                                          },
-                                                        ));
-
-                                                        setState(() {
-                                                          print(
-                                                              "Got Address back");
-                                                          print(address);
-                                                          // Navigator.pop(context);
-                                                        });
-                                                      },
-                                                    )
-                                                  ],
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: Color(AppColorConfig
-                                                        .success)),
-                                                width: double.maxFinite,
-                                              ),
-                                              Center(
-                                                  child: InkWell(
-                                                child: Container(
-                                                  child: Lottie.asset(
-                                                      'assets/logo/Animation - 1698223136592.json',
-                                                      fit: BoxFit.cover),
-                                                  height: 178,
-                                                ),
-                                                onTap: () async {
-                                                  var location =
-                                                      await Location()
-                                                          .getLocation();
-                                                  print(
-                                                      "User current location");
-                                                  print(location.longitude);
-                                                  print(location.latitude);
-
-                                                  address =
-                                                      await Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return GoogleMapScreen(
-                                                        positionlong:
-                                                            location.longitude,
-                                                        positionlat:
-                                                            location.latitude,
-                                                      );
-                                                    },
-                                                  ));
-
-                                                  setState(() {
-                                                    print("Got Address back");
-                                                    print(address);
-                                                  });
-                                                },
-                                              )),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                            ],
-                                          ),
-
-                                        )
-                                      : ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              state.add?.results!.length ?? 0,
-                                          itemBuilder: (context, index) {
-                                            if (add == null) {
-                                              addressid = state
-                                                  .add?.results?[len! - 1].id;
-                                            } else {
-                                              addressid = add['addressid'];
-                                            }
-
-                                            return InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedIndexAddress = index;
-                                                });
-                                                print("Selected addr index");
-                                                print(selectedIndexAddress);
-                                              },
-                                              child: Container(
-                                                width: double.maxFinite,
-
-                                                margin: EdgeInsets.only(
-                                                    bottom: 10, right: 10),
-
-                                                padding: EdgeInsets.only(
-                                                    top: 25,
-                                                    bottom: 35,
-                                                    left: 15,
-                                                    right: 15),
-
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            add = await Navigator
-                                                                .push(context,
-                                                                    MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return AddressProductScr(
-                                                                  ischoice:
-                                                                      true,
-                                                                  userid: widget
-                                                                      .uid,
-                                                                );
-                                                              },
-                                                            ));
-
-                                                            setState(() {
-                                                              print(
-                                                                  "Got Address id: ");
-                                                              print(add);
-
-                                                              print(
-                                                                  "Click location");
-                                                              print(add[
-                                                                  'latitute']);
-                                                              print(add[
-                                                                  'longtitute']);
-                                                              addressid = add[
-                                                                  'addressid'];
-                                                              print(
-                                                                  "The location is ${addressid}");
-                                                            });
-                                                          },
-                                                          child: Row(
-                                                            children: [
-                                                              Icon(Icons
-                                                                  .location_on),
-                                                              Text(
-                                                                "Choose Locations",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12.8),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        InkWell(
-                                                          child: Row(
-                                                            children: [
-                                                              Icon(Icons.map),
-                                                              Text(
-                                                                "Select On Map",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12.8),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          onTap: () async {
-                                                            var location =
-                                                                await Location()
-                                                                    .getLocation();
-
-                                                            print(
-                                                                "User current location");
-                                                            print(location
-                                                                .longitude);
-                                                            print(location
-                                                                .latitude);
-
-                                                            address =
-                                                                await Navigator
-                                                                    .push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return GoogleMapScreen(
-                                                                  positionlong:
-                                                                      location
-                                                                          .longitude,
-                                                                  positionlat:
-                                                                      location
-                                                                          .latitude,
-                                                                );
-                                                              },
-                                                            ));
-
-                                                            setState(() {
-                                                              print(
-                                                                  "Got Address back");
-                                                              print(address);
-                                                            });
-                                                            //
-                                                            //
-                                                            //       },
-                                                            //       child: Text('Add New',style: TextStyle(
-                                                            //         fontSize: 11
-                                                            //       ),)),
-                                                            // )
-                                                          },
-                                                        )
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    if (previewimages != null)
-                                                      Image.network(
-                                                        '${previewimages}',
-                                                        fit: BoxFit.cover,
-                                                        width: double.maxFinite,
-                                                        height: 180,
-                                                      ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text(
-                                                      '${add == null ? state.add?.results![len! - 1].street : add['street']}',
-                                                      style: TextStyle(
-                                                          fontSize: 14.8,
-                                                          color: Colors.black),
-                                                    )
-                                                  ],
-                                                ),
-                                              
-                                              ),
-                                            );
-                                          },
-                                        );
-                                } else {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-                            ),
+                          DeliveryAddress(
+                            onAddressSelected: _onAddressSelected,
                           ),
                           //TODO Payment
                           SizedBox(
@@ -854,12 +427,11 @@ class _CheckoutState extends State<Checkout> {
                               });
                             },
                             selected: initpayment == 1,
-                            // selectedTileColor: Color(AppColorConfig.primaryswatch),
-                            tileColor: Color(AppColorConfig.primarylight),
+                            tileColor: Color.fromRGBO(112, 16, 223, 100)
+                                .withOpacity(0.4),
                             shape: Border.all(
                                 color: Colors.grey.withOpacity(0.25)),
                             contentPadding: EdgeInsets.all(10),
-
                             leading: Image.asset(
                               'assets/logo/Money icon.png',
                               width: 50,
@@ -892,8 +464,8 @@ class _CheckoutState extends State<Checkout> {
                             },
                             selected: initpayment == 1,
 
-                            selectedTileColor:
-                                Color(AppColorConfig.primarylight),
+                            selectedTileColor: Color.fromRGBO(112, 16, 223, 100)
+                                .withOpacity(0.4),
                             // tileColor: Color(AppColorConfig.primarylight),
                             shape: Border.all(
                                 color: Colors.grey.withOpacity(0.25)),
@@ -901,16 +473,9 @@ class _CheckoutState extends State<Checkout> {
 
                             leading: Image.asset(
                               'assets/logo/Credit Card Icon.png',
-
                               width: 50,
                               height: 50,
                               color: Colors.black,
-                              // color:
-                              //
-                              //
-                              // initpayment == 1?
-                              // Colors.white:
-                              // Colors.black,
                             ),
                             title: Text(
                               "Credit or Debit Card",
@@ -929,7 +494,6 @@ class _CheckoutState extends State<Checkout> {
                           SizedBox(
                             height: 20,
                           ),
-
                           SizedBox(
                             height: 40,
                           ),
@@ -983,30 +547,10 @@ class _CheckoutState extends State<Checkout> {
                                     ),
                                     Text(
                                       '\$ ${widget.subtotal}',
-                                      style: TextStyle(
-                                          // color: Color(AppColorConfig.success),
-                                          // fontSize: 18,
-                                          // fontWeight: FontWeight.w500
-                                          // fontWeight: FontWeight.w500,
-                                          // color: Color(AppColorConfig.success),
-                                          // fontSize: 18,
-                                          ),
                                     ),
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   margin: EdgeInsets.only(bottom: 15),
-                              //   child: Row(
-                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //     children: [
-                              //       Text('Promotion Discount',style: TextStyle(
-                              //           color: Colors.grey
-                              //       ),),
-                              //       Text(' % ${widget?.discount ?? 0}'),
-                              //     ],
-                              //   ),
-                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1027,8 +571,9 @@ class _CheckoutState extends State<Checkout> {
                               Container(
                                 margin: EdgeInsets.only(bottom: 135, top: 10),
                                 padding: EdgeInsets.all(10),
-                                decoration:
-                                    BoxDecoration(color: Color(0xffC2E5DF)),
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(112, 16, 223, 100)
+                                        .withOpacity(0.4)),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -1036,14 +581,16 @@ class _CheckoutState extends State<Checkout> {
                                     Text(
                                       'SubTotal',
                                       style: TextStyle(
-                                          color: Color(AppColorConfig.success),
+                                          color: Color(
+                                              AppColorConfig.primarycolor),
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
                                       '\$ ${widget.subtotal}',
                                       style: TextStyle(
-                                          color: Color(AppColorConfig.success),
+                                          color: Color(
+                                              AppColorConfig.primarycolor),
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -1074,101 +621,97 @@ class _CheckoutState extends State<Checkout> {
               children: [
                 Expanded(
                   child: FloatingActionButton.extended(
-                      backgroundColor: Color(AppColorConfig.primarycolor),
-                      elevation: 0,
-                      isExtended: true,
-                      extendedPadding: EdgeInsets.all(0),
-                      shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      //
-                      // shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(14)
-                      // ),
-                      onPressed: () {
-                        //TODO submit order
-                        print("Submit Order");
-                        print("USer address id is ${addressid}");
+                    backgroundColor: Color(AppColorConfig.primarycolor),
+                    elevation: 0,
+                    isExtended: true,
+                    extendedPadding: EdgeInsets.all(0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the radius as needed
+                    ),
+                    onPressed: () {
+                      //TODO submit order
+                      print("Submit Order");
+                      print("User  address id is ${addressid}");
 
-                        if (addressid == null) {
-                          print("True True");
-                          PopUpUnauthorize(context);
-                          return;
-                        }
-                        //TODO do some event
+                      if (addressid == null) {
+                        print("True True");
+                        PopUpUnauthorize(context);
+                        return;
+                      }
+                      //TODO do some event
 
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: Color(AppColorConfig.bgcolor),
-                              ),
-                            );
-                          },
-                        );
-                        List<Productss>? item = [];
-
-                        for (int index = 0; index < cart!.length; index++) {
-                          print(
-                            cart![index].colorid.id,
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Color(AppColorConfig.bgcolor),
+                            ),
                           );
-                          item.add(Productss(
-                            id: cart![index].productid,
-                            quantity: cart![index].qty,
-                            colorselection: cart![index].colorid.id,
-                            size: cart![index].sizeid,
-                          ));
-                        }
-                        print("Error");
+                        },
+                      );
+                      List<Productss>? item = [];
 
-                        print("Item in cart");
-                        print(item.length);
-                        //TODO orderrequest
-                        print(item);
+                      for (int index = 0; index < cart!.length; index++) {
+                        print(cart![index].colorid.id);
+                        item.add(Productss(
+                          id: cart![index].productid,
+                          quantity: cart![index].qty,
+                          colorselection: cart![index].colorid.id,
+                          size: cart![index].sizeid,
+                        ));
+                      }
+                      print("Error");
 
-                        print(widget.uid);
-                        print(initpayment);
-                        print("SAda");
+                      print("Item in cart");
+                      print(item.length);
+                      //TODO orderrequest
+                      print(item);
 
-                        if (initpayment == 1) {
-                          print("What is our init state");
-                          double total = 0;
-                          var qtytotal = 0;
-                          cart!?.forEach((element) {
-                            print(element.price);
-                            total += (element!.price * element.qty);
-                            qtytotal += element!.qty!;
-                          });
-                          //TODO stripe payment function
-                          makePayment(
-                                  currency: "USD",
-                                  totalamount: total.ceil().toString())
-                              .then((value) {
-                            print("Success");
-                          }).catchError((err) {
-                            print(err);
-                          });
-                        }
-                        //
+                      print(widget.uid);
+                      print(initpayment);
+                      print("SAda");
 
-                        else {
-                          print(item[0].colorselection);
-                          print(item[0].quantity);
+                      if (initpayment == 1) {
+                        print("What is our init state");
+                        double total = 0;
+                        var qtytotal = 0;
+                        cart?.forEach((element) {
+                          print(element.price);
+                          total += (element!.price * element.qty);
+                          qtytotal += element!.qty!;
+                        });
+                        //TODO stripe payment function
+                        makePayment(
+                          currency: "USD",
+                          totalamount: total.ceil().toString(),
+                        ).then((value) {
+                          print("Success");
+                        }).catchError((err) {
+                          print(err);
+                        });
+                      } else {
+                        print(item[0].colorselection);
+                        print(item[0].quantity);
 
-                          OrderRequestV2 order = OrderRequestV2(
-                              customer: widget.uid,
-                              method: initpayment == 0 ? "Cash" : "online",
-                              productss: item);
+                        OrderRequestV2 order = OrderRequestV2(
+                          customer: widget.uid,
+                          method: initpayment == 0 ? "Cash" : "online",
+                          productss: item,
+                        );
 
-                          BlocProvider.of<OrderBloc>(context, listen: false)
-                              .add(PostOrderEvent(
-                                  addressid: addressid, orderRequestV2: order));
-                        }
-                      },
-                      label: Text(
-                        'Place Order',
-                        style: TextStyle(fontSize: 15.8,color: Colors.white),
-                      )),
+                        BlocProvider.of<OrderBloc>(context, listen: false).add(
+                          PostOrderEvent(
+                              addressid: addressid, orderRequestV2: order),
+                        );
+                      }
+                    },
+                    label: Text(
+                      'Place Order',
+                      style: TextStyle(fontSize: 15.8, color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -204,7 +204,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                     backgroundColor:
 
                                     state?.orderDetail?.status!.toLowerCase() == "pending" ?
-                                    Colors.green :
+                                    Color(AppColorConfig.primarycolor) :
                                     Color(0xffD9D9D9)
                                     ,
 
@@ -245,7 +245,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
                                       backgroundColor:
                                 state?.orderDetail?.status!.toLowerCase() == "delivering" ?
-                                Colors.green :
+                                Color(AppColorConfig.primarycolor) :
 
                                  Color(0xffD9D9D9)
 
@@ -279,7 +279,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 backgroundColor:
 
                                 state?.orderDetail?.status == "Completed" ?
-                                Colors.green :
+                                Color(AppColorConfig.primarycolor) :
 
                                 Color(0xffD9D9D9)
                             ),
@@ -435,14 +435,14 @@ class _TrackingScreenState extends State<TrackingScreen> {
                             style: TextStyle(
                               fontSize: 14.8,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xff508A7B)
+                              color: Color(AppColorConfig.primarycolor)
                           ),),
                           Row(
                             children: [
                               Text("Total: ",style: TextStyle(
                                   fontSize: 14.8,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff508A7B)
+                                  color: Color(AppColorConfig.primarycolor)
                               ),),
                               Text('\$ ${
                                   (order.colorselection?.price  * (  order.quantity )).toStringAsFixed(2)
@@ -451,7 +451,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                               }', style: TextStyle(
                                   fontSize: 14.8,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff508A7B)
+                                  color: Color(AppColorConfig.primarycolor)
                               ),),
                             ],
                           )
@@ -524,19 +524,20 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       margin: EdgeInsets.only(bottom: 0, top: 10),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Color(0xffC2E5DF)
+                          color: Color.fromRGBO(112, 16, 223, 100)
+                                            .withOpacity(0.4)
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('SubTotal', style: TextStyle(
-                              color: Color(AppColorConfig.success),
+                              color: Color(AppColorConfig.primarycolor),
                               fontSize: 18,
                               fontWeight: FontWeight.w500
                           ),),
                           Text('\$ ${state.orderDetail?.amount}',style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            color: Color(AppColorConfig.success),
+                            color: Color(AppColorConfig.primarycolor),
                             fontSize: 18,
                           ),),
                         ],
@@ -585,34 +586,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
     if(state is OrderSuccessCompleted) {
       print("Success reorder");
 
-        // Navigator.pushReplacement(context,
-        //
-        //     MaterialPageRoute(builder: (_) => Success(order: state?.orderReponse,)));
-
-
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
          return Success(order: state?.orderReponse,);
         },), (route) => false);
 
-      //TODO use this whenever u want to push neww screen after state updated
-      // Navigator.push(context, MaterialPageRoute(
-      //   builder: (context) {
-      //   return Success();
-      // },));
     }
   },
   builder: (context, state) {
-    // if(state is OrderSuccessCompleted) {
-    //   print("Success");
-    //   WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Success(order: state?.orderReponse,)));
-    //   });
-    //   //TODO use this whenever u want to push neww screen after state updated
-    //   // Navigator.push(context, MaterialPageRoute(
-    //   //   builder: (context) {
-    //   //   return Success();
-    //   // },));
-    // }
     if(state is OrderDetailSuccess) {
 
       print("Order Succes Here");
@@ -623,14 +603,14 @@ class _TrackingScreenState extends State<TrackingScreen> {
           children: [
             Expanded(
               child: FloatingActionButton.extended(
-                  backgroundColor: Color(AppColorConfig.success),
+                  backgroundColor: Color(AppColorConfig.primarycolor),
 
                   elevation: 0,
                   isExtended: true,
                   extendedPadding: EdgeInsets.all(0),
 
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)
+                      borderRadius: BorderRadius.circular(10)
                   ),
                   onPressed: () async {
                     //TODO submit order
@@ -706,30 +686,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
                        print(err);
 
                      });
-                     // OrderRequestV2 order = OrderRequestV2(
-                     //
-                     //     customer:prefs.getInt("userid"),
-                     //
-                     //     method: "Online",
-                     //     productss:item
-                     //
-                     // );
-                     //
-                     // BlocProvider.of<OrderBlocUser>(context,listen: false).add(PostOrderEvent( addressid:
-                     //
-                     // state!.orderDetail!.address?.id
-                     //     ,orderRequestV2: order));
                    }
-
-
-
-
-
                   }, label:Row(
                 children: [
                   Icon(Icons.restart_alt),
                   Text('Reorder',style: TextStyle(
-                      fontSize: 14.8
+                      fontSize: 14.8,
+                      color: Colors.white
                   ),),
                 ],
               )),

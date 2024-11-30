@@ -16,9 +16,9 @@ class OrderRepository {
 
   Future<dynamic> PostOrderUser( addressid,OrderRequestV2? orderRequestV2) async {
     try {
+      print('orderRequestV2 ${orderRequestV2}');
       var res = await apiService.PostOrder(ApiUrl.orderurl,addressid,orderRequestV2);
-      print("Repostiory Post Order User");
-      // print(res);
+      print('res in order repo${res}');
 
       return OrderReponse.fromJson(res);
       // return CartegoryModel.fromJson(res);
@@ -28,7 +28,7 @@ class OrderRepository {
 
 
     } catch (e) {
-      print(e);
+      print('order error ${e}');
       rethrow;
     }
   }

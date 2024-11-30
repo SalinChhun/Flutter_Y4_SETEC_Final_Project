@@ -27,6 +27,7 @@ class OrderSuccessCompleted extends OrderState {
 }
 class OrderError extends OrderState {
 
+
 }
 
 class OrderSuccess extends OrderState {

@@ -24,24 +24,10 @@ class ProductAllPage extends StatefulWidget {
   State<ProductAllPage> createState() => _ProductAllPageState();
 }
 
-// var sortclass = [
-//   "Best Selling",
-//   "New Arrival",
-//   "Rating",
-//   "Name A-z",
-//   "Name z-A",
-//   "Price",
-//   "Filter",
-//   "Sort"
-// ];
 class _ProductAllPageState extends State<ProductAllPage> {
   var txtsearch = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
-    print(widget.selectedcategory);
-    // http://127.0.0.1:8000/product/sort?search=Men&popular=asc
-
     super.initState();
   }
 
@@ -69,11 +55,6 @@ class _ProductAllPageState extends State<ProductAllPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    // return  SearchScreen(
-                    //   sortby: 0,
-                    //   focus: true,
-                    //
-                    // );
                     return SearchPage(
                       focus: true,
                       titlesearch: txtsearch.text,
@@ -84,9 +65,6 @@ class _ProductAllPageState extends State<ProductAllPage> {
               );
             },
             decoration: InputDecoration(
-                // filled: true,
-                //
-                // fillColor: Color(AppColorConfig.bgfill),
                 hintText: 'Search By brand or product name...etc',
                 contentPadding: EdgeInsets.only(right: 24),
                 floatingLabelStyle: TextStyle(color: Colors.black),
@@ -95,27 +73,13 @@ class _ProductAllPageState extends State<ProductAllPage> {
                     borderRadius: BorderRadius.circular(10))),
           ),
         ),
-        // title:Text("${widget.apptitle}",style: TextStyle(
-        //     color: Colors.black
-        // ),),
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0.14),
         centerTitle: true,
 
         actions: [
-          // InkWell(
-          //     onTap: () {
-          //       Navigator.push(context,MaterialPageRoute(builder: (context) {
-          //         return  SearchScreen();
-          //       },));
-          //
-          //     },
-          //
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Icon(Icons.search),
-          //     ))
+      
         ],
       ),
       body: SafeArea(
@@ -149,11 +113,11 @@ class _ProductAllPageState extends State<ProductAllPage> {
                         decoration: BoxDecoration(
                             color: widget.selectedcategory ==
                                     widget.category![index].id
-                                ? Color(AppColorConfig.success)
+                                ? Color(AppColorConfig.primarycolor)
                                 : null,
                             border: widget.selectedcategory ==
                                     widget.category![index].id
-                                ? Border.all(color: Colors.green)
+                                ? Border.all(color: Color(AppColorConfig.primarycolor))
                                 : Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(6)),
                         margin: EdgeInsets.only(right: 20),
@@ -164,7 +128,7 @@ class _ProductAllPageState extends State<ProductAllPage> {
                               size: 19,
                               color: widget.selectedcategory ==
                                       widget.category![index].id
-                                  ? Color(AppColorConfig.primarylight)
+                                  ? Colors.white
                                   : null,
                             ),
                             Text(
@@ -173,7 +137,7 @@ class _ProductAllPageState extends State<ProductAllPage> {
                                   fontSize: 12.8,
                                   color: widget.selectedcategory ==
                                           widget.category![index].id
-                                      ? Color(AppColorConfig.primarylight)
+                                      ? Colors.white
                                       : null),
                             ),
                           ],
@@ -308,7 +272,7 @@ class _ProductAllPageState extends State<ProductAllPage> {
                                               style: TextStyle(
                                                   fontSize: 12.8,
                                                   color: Color(
-                                                      AppColorConfig.success)),
+                                                      AppColorConfig.primarycolor)),
                                             )
                                           ],
                                         ),
@@ -347,7 +311,7 @@ class _ProductAllPageState extends State<ProductAllPage> {
                                                 ),
                                                 child: CircleAvatar(
                                                   backgroundColor: Color(
-                                                      AppColorConfig.success),
+                                                      AppColorConfig.primarycolor),
                                                   radius: 12,
                                                   child: Image.asset(
                                                     'assets/logo/shopping-cart.png',

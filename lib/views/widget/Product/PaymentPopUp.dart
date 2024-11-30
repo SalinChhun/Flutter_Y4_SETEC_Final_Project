@@ -38,7 +38,8 @@ class _PaymentPopUpState extends State<PaymentPopUp> {
               },
               selected: initpayment == 1 ,
               // selectedTileColor: Color(AppColorConfig.primaryswatch),
-              tileColor: Color(AppColorConfig.primarylight),
+              tileColor: Color.fromRGBO(112, 16, 223, 100)
+                                            .withOpacity(0.4),
               shape: Border.all(
                   color: Colors.grey.withOpacity(0.25)
               ),
@@ -85,12 +86,6 @@ class _PaymentPopUpState extends State<PaymentPopUp> {
                 width: 50,
                 height: 50,
                 color: Colors.black,
-                // color:
-                //
-                //
-                // initpayment == 1?
-                // Colors.white:
-                // Colors.black,
 
               ),
               title: Text("Credit or Debit Card",style: TextStyle(
@@ -125,10 +120,13 @@ class _PaymentPopUpState extends State<PaymentPopUp> {
 
                       style: ButtonStyle(
                         elevation: MaterialStatePropertyAll(0),
-                        backgroundColor: MaterialStatePropertyAll(Color(AppColorConfig.success))
+                        backgroundColor: MaterialStatePropertyAll(Color(AppColorConfig.primarycolor))
                       ),
 
-                      child: Text('Comfirm')),
+                      child: Text('Comfirm',
+                      style: 
+                        TextStyle(color: Colors.white)
+                      )),
                 ),
               ]
 

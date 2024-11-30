@@ -337,7 +337,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                     color: selectedcategory == index
-                                        ? Color(AppColorConfig.success)
+                                        ? Color(AppColorConfig.primarycolor)
                                         : null,
                                     border: selectedcategory == index
                                         ? Border.all(
@@ -355,16 +355,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                       size: 12,
                                       color: selectedcategory == index
                                           ? Color(AppColorConfig.primarylight)
-                                          : Color(AppColorConfig.success),
+                                          : Color(AppColorConfig.primarycolor),
                                     ),
                                     Text(
                                       "${listfilter?[index]}",
                                       style: TextStyle(
                                           fontSize: 10.8,
                                           color: selectedcategory == index
-                                              ? Color(
-                                                  AppColorConfig.primarylight)
-                                              : Color(AppColorConfig.success)),
+                                              ? Color.fromRGBO(112, 16, 223, 100)
+                                            .withOpacity(0.4)
+                                              : Color(AppColorConfig.primarycolor)),
                                     ),
                                   ],
                                 ),
@@ -418,7 +418,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         style: TextStyle(
                                             fontSize: 16,
                                             color:
-                                                Color(AppColorConfig.success)),
+                                                Color(AppColorConfig.primarycolor)),
                                       ),
                                       Text(
                                         "Try another search",
@@ -595,7 +595,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             fontSize: 12.8,
                                                             color: Color(
                                                                 AppColorConfig
-                                                                    .success)),
+                                                                    .primarycolor)),
                                                       ),
                                                     )
                                                   ],
@@ -646,7 +646,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           backgroundColor:
                                                               Color(
                                                                   AppColorConfig
-                                                                      .success),
+                                                                      .primarycolor),
                                                           radius: 12,
                                                           child: Image.asset(
                                                             'assets/logo/shopping-cart.png',

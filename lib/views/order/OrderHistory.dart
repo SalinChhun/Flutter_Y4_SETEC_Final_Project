@@ -59,31 +59,18 @@ class _OrderHistoryState extends State<OrderHistory>
               },
               controller: _vcontroller,
               labelStyle: TextStyle(fontSize: 14.8, color: Colors.white),
-
               padding: EdgeInsets.all(0),
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3,
-
               indicatorColor: Color(AppColorConfig.success),
               indicatorPadding: EdgeInsets.all(7),
-
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.grey.withOpacity(0.3)),
-              // indicator: UnderlineTabIndicator(
-              //
-              //     borderSide: BorderSide(width:5.0,color:Color(AppColorConfig.primarylight), ),
-              //
-              //
-              //     insets: EdgeInsets.symmetric(horizontal:16.0),
-              //
-              // ),
               labelColor: Colors.white,
-
               unselectedLabelStyle:
                   TextStyle(fontSize: 12.8, color: Colors.grey),
               unselectedLabelColor: Colors.grey,
-
               tabs: [
                 Tab(
                   text: 'Pending',
@@ -182,20 +169,7 @@ class _OrderHistoryState extends State<OrderHistory>
                                           bottom: 15),
                                       tileColor: Colors.white,
                                       style: ListTileStyle.list,
-
-                                      // leading: Icon(Icons.payments_sharp),
-
                                       isThreeLine: true,
-
-                                      // leading: Container(
-                                      //   width: 5,
-                                      //
-                                      //
-                                      //   decoration: BoxDecoration(
-                                      //     color: Color(AppColorConfig.success)
-                                      //   ),
-                                      // ),
-
                                       title: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

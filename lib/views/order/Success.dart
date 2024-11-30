@@ -92,7 +92,7 @@ class _SuccessState extends State<Success> {
 
                       padding: EdgeInsets.all(15),
 
-                      backgroundColor: Color(AppColorConfig.success),
+                      backgroundColor: Color(AppColorConfig.primarycolor),
                     shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.circular(0)
                     )
@@ -106,6 +106,7 @@ class _SuccessState extends State<Success> {
 
 
                   }, child: Text("Done",style: TextStyle(
+                    color: Colors.white,
                 fontSize: 20
               ),)),
             ),

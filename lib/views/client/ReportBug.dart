@@ -241,14 +241,14 @@ class _ReportScreenState extends State<ReportScreen> {
                   Text("Need Help?", style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w500,
-                      color: Color(AppColorConfig.success)
+                      color: Color(AppColorConfig.primarycolor)
                   ),),
                   Text(
                       "Contact us 24/7 by selecting any choice you prefer bellow",
                       textAlign: TextAlign.center,
 
                       style: TextStyle(
-                        color: Color(AppColorConfig.primaryswatchv2),
+                        color: Color(AppColorConfig.primarycolor),
                       )
                   )
 
@@ -274,7 +274,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
               textcolor: AppColorConfig.bgcolor,
 
-              bgcolor: AppColorConfig.success,
+              bgcolor: AppColorConfig.primarycolor,
 
             ),
             SizedBox(height: 10,),
@@ -284,8 +284,8 @@ class _ReportScreenState extends State<ReportScreen> {
               type: "bug",
               onlaunch: launchurl,
               isoutline: true,
-              textcolor: AppColorConfig.success,
-              bordercolor: AppColorConfig.success,
+              textcolor: AppColorConfig.primarycolor,
+              bordercolor: AppColorConfig.primarycolor,
 
               bgcolor: AppColorConfig.bgcolor,
 
@@ -297,8 +297,8 @@ class _ReportScreenState extends State<ReportScreen> {
               onlaunch: launchurl,
               type: "email",
               isoutline: true,
-              textcolor: AppColorConfig.success,
-              bordercolor: AppColorConfig.success,
+              textcolor: AppColorConfig.primarycolor,
+              bordercolor: AppColorConfig.primarycolor,
 
               bgcolor: AppColorConfig.bgcolor,
 
