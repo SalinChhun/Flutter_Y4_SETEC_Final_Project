@@ -68,19 +68,21 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
     on<DeleteAddress>((event, emit) async {
       emit(AddressPostLoading());
-      // TODO: implement event handler
-      try{
-        print("Send post adddress event");
-        var response = await addressRepository.DeleteAddress(event.id);
-
-        emit(AddressPostDone(addDeleteResponse:response  ));
-
-
-
-      }catch(error) {
-        print(error.toString());
-        emit(AddressPostError());
-      }
+  try {
+    print("Send post address event");
+    var response = await addressRepository.DeleteAddress(event.id);
+    
+    if (response['status'] == 'success') {
+      // If deletion is successful, fetch the updated address list
+      add(FetchAddress(userid: event.id)); // Trigger FetchAddress event
+      emit(AddressPostDone(addDeleteResponse: response));
+    } else {
+      emit(AddressPostError());
+    }
+  } catch (error) {
+    print(error.toString());
+    emit(AddressPostError());
+  }
 
     });
   }
@@ -109,18 +111,15 @@ class AddressBlocV2 extends Bloc<AddressEvent, AddressState> {
 
     on<FetchAddress>((event, emit) async {
       emit(AddressLoading());
-      // TODO: implement event handler
-      try{
-        print("Send post event");
-        var response = await addressRepository.FetchAddress(event.userid);
-        print(response);
-        emit(AddressDone(add:response ));
-
-
-      }catch(error) {
-        print(error.toString());
-        emit(AddressError());
-      }
+  try {
+    print("Send post event");
+    var response = await addressRepository.FetchAddress(event.userid);
+    print(response);
+    emit(AddressDone(add: response));
+  } catch (error) {
+    print(error.toString());
+    emit(AddressError());
+  }
 
     });
   }

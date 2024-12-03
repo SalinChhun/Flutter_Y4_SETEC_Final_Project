@@ -115,6 +115,7 @@ class _CustomCardListState extends State<CustomCardList> {
                   child: CachedNetworkImage(
                     imageUrl: imageUrl,
                     fit: BoxFit.cover,
+                    height: 160,
                     progressIndicatorBuilder: (context, url, downloadProgress) => Center(
                       child: CircularProgressIndicator(
                         strokeWidth: 2,

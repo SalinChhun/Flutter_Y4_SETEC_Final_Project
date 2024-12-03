@@ -16,17 +16,10 @@ class AddressRepository {
   Future<dynamic> PostAddress(AddressBody? addressBody,userid,desc) async {
 
     try{
-
+      print('post addressBody ${addressBody}');
+      print('post address userid ${userid}');
       var res = await apiService.AddressPost(ApiUrl.addressurlpost,addressBody! ,userid,desc);
       return AddressModelResponse.fromJson(res);
-
-
-
-
-      // return TokenModel.fromJson(res);
-
-
-
 
     }catch(e) {
       print(e);

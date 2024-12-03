@@ -420,12 +420,16 @@ class NetworkApiService {
   }
 
   Future<dynamic> AddressPost(
-      String? url, AddressBody addressbody, uid, desc) async {
+      String? url, AddressBody addressbody, customerId, desc) async {
     try {
-      print(addressbody);
-
+      print('addressbody street ${addressbody.street}');
+      print('addressbody city ${addressbody.country}');
+      print('addressbody latitude ${addressbody.lat.toString()}');
+      print('addressbody longitude ${addressbody.lon.toString()}');
+      print('addressbody country ${addressbody.country}');
+      print('addressbody description ${desc}');
       var res = await http.post(
-        Uri.parse('${url}${uid}'),
+        Uri.parse('${url}${customerId}'),
         body: {
           "street": addressbody.street,
           "city": addressbody.country,
@@ -434,14 +438,8 @@ class NetworkApiService {
           "country": addressbody.country,
           "description": "${desc}"
         },
-        //     headers: {
-        //       'Content-type': 'application/json',
-        //       'Accept': 'application/json'
-        //       // "Authorization": "Some token"
-        //
-        // }
       );
-      print(res.statusCode);
+      print('res.statusCode post address ${res.statusCode}');
 
       return json.decode(responseStatusCheck(res));
     } on SocketException {
@@ -452,8 +450,7 @@ class NetworkApiService {
   Future<dynamic> AddressPatch(
       String? url, AddressBody addressbody, uid, aid, desc) async {
     try {
-      print(addressbody);
-
+      
       var res = await http.put(
         Uri.parse('${url}/${aid}'),
         body: {
@@ -464,15 +461,7 @@ class NetworkApiService {
           "country": addressbody.country,
           "description": desc
         },
-        //     headers: {
-        //       'Content-type': 'application/json',
-        //       'Accept': 'application/json'
-        //       // "Authorization": "Some token"
-        //
-        // }
       );
-      // print(res.statusCode);
-      // print(res.body.toString());
       return json.decode(responseStatusCheck(res));
     } on SocketException {
       print("No internet during communication");
@@ -481,20 +470,12 @@ class NetworkApiService {
 
   Future<dynamic> DeleteAddress(addid) async {
     try {
-      print(addid);
+      print('delete addtess id ${addid}');
 
       var res = await http.delete(
-        Uri.parse('${ApiUrl.addressurlput}/${addid}'),
-
-        //     headers: {
-        //       'Content-type': 'application/json',
-        //       'Accept': 'application/json'
-        //       // "Authorization": "Some token"
-        //
-        // }
+        Uri.parse('${ApiUrl.addressDelete}${addid}'),
       );
-      // print(res.statusCode);
-      // print(res.body.toString());
+      print('res.statusCode delete address ${res.statusCode}');
       return json.decode(responseStatusCheck(res));
     } on SocketException {
       print("No internet during communication");
@@ -566,13 +547,6 @@ class NetworkApiService {
       var res = await http.post(
           Uri.parse('${ApiUrl.addproductfavurl}/${pid}/delete'),
           body: {'user': '${uid}'}
-
-          //     headers: {
-          //       'Content-type': 'application/json',
-          //       'Accept': 'application/json'
-          //       // "Authorization": "Some token"
-          //
-          // }
           );
       print(res.statusCode);
       // print(res.body.toString());
@@ -584,23 +558,15 @@ class NetworkApiService {
 
   Future<dynamic> AddressFetch(uid) async {
     try {
-      var url = ApiUrl.addressuser;
+    var url = ApiUrl.addressuser;
 
-      var res = await http.get(
-        Uri.parse('${url}${uid}'),
-        //     headers: {
-        //       'Content-type': 'application/json',
-        //       'Accept': 'application/json'
-        //       // "Authorization": "Some token"
-        //
-        // }
-      );
-      // print(res.statusCode);
-      // print(res.body.toString());
-      return json.decode(responseStatusCheck(res));
-    } on SocketException {
-      print("No internet during communication");
-    }
+    var res = await http.get(
+      Uri.parse('${url}${uid}'),
+    );
+    return json.decode(responseStatusCheck(res));
+  } on SocketException {
+    print("No internet during communication");
+  }
   }
 
 //
@@ -735,6 +701,10 @@ class NetworkApiService {
       return res.body;
     }
     if (res.statusCode == 201) {
+      print("Valid");
+      return res.body;
+    }
+    if (res.statusCode == 204) {
       print("Valid");
       return res.body;
     }
